@@ -18,8 +18,11 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.urls import path
 
+from mes_aliments import views
+
 urlpatterns = [
-    url(r'^accueil/', include('accueil.urls')),
+    url(r'^$', views.index),
+    url(r'^mes_aliments/', include('mes_aliments.urls')),
     path('admin/', admin.site.urls),
 ]
 
