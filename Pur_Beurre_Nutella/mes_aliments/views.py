@@ -5,5 +5,9 @@ from django.template import loader
 # Create your views here.
 
 def index(request):
-	template = loader.get_template('mes_aliments/index.html')
-	return HttpResponse(template.render(request=request))
+    template = loader.get_template('mes_aliments/index.html')
+    return HttpResponse(template.render(request=request))
+
+def product(request):
+    template = loader.get_template('mes_aliments/mes_produits.html')
+    return HttpResponse(template.render(request=request))
