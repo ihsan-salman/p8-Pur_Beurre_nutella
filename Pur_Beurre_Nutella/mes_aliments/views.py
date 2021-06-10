@@ -11,3 +11,7 @@ def index(request):
 def product(request):
     template = loader.get_template('mes_aliments/mes_produits.html')
     return HttpResponse(template.render(request=request))
+
+def connexion(request):
+    template = loader.get_template('mes_aliments/mon_compte.html')
+    return HttpResponse(template.render(request=request))
