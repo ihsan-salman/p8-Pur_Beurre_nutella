@@ -5418,6 +5418,10 @@ textarea.form-control-lg {
   .modal-fullscreen-sm-down .modal-footer {
     border-radius: 0;
   }
+  #text_input
+  {
+    width: 60%;
+  }
 }
 @media (max-width: 767.98px) {
   .modal-fullscreen-md-down {
@@ -6942,7 +6946,9 @@ textarea.form-control-lg {
 .mt-5 {
   margin-top: 3rem !important;
 }
-
+.mt-6 {
+  margin-top: 5rem !important;
+}
 .mt-auto {
   margin-top: auto !important;
 }
@@ -11027,4 +11033,8 @@ h1, h2, h3
 p
 {
   font-family: "Scope One", sans-serif;
+}
+.float_left
+{
+  float: left;
 }
