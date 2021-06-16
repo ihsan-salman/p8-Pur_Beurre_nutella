@@ -3,10 +3,19 @@ from django.db import models
 # Create your models here.
 
 class Category(models.Model):
-	name = models.CharField(max_length=200, unique=True, default='DEFAULT VALUE')
+    name = models.CharField(max_length=200, unique=True, default='DEFAULT VALUE')
 
-	def __str__(self):
-		return self.name
+    def __str__(self):
+        return self.name
+
+def save_category(name):
+    save_data = Category(name=name)
+    save_data.save()
+
+CATEGORY_NAME = ['biscuit', 'boisson', 'pizza', 'eau', 'glace']
+
+for item in CATEGORY_NAME:
+    save_category(item)
 
 class Product(models.Model):
 	name = models.CharField(max_length=200, unique=True)
@@ -15,6 +24,7 @@ class Product(models.Model):
 	url = models.URLField()
 	stores = models.CharField(max_length=200)
 	category = models.ForeignKey(Category, on_delete=models.PROTECT)
+	
 	def __str__(self):
 		return self.name
 
@@ -28,3 +38,5 @@ class Favorite(models.Model):
 
 	def __str__(self):
 		return self.product
+
+
