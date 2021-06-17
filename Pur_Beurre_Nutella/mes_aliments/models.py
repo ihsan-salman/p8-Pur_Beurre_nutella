@@ -8,14 +8,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-def save_category(name):
-    save_data = Category(name=name)
-    save_data.save()
-
-CATEGORY_NAME = ['biscuit', 'boisson', 'pizza', 'eau', 'glace']
-
-for item in CATEGORY_NAME:
-    save_category(item)
 
 class Product(models.Model):
 	name = models.CharField(max_length=200, unique=True)
@@ -28,6 +20,7 @@ class Product(models.Model):
 	def __str__(self):
 		return self.name
 
+
 class Favorite(models.Model):
 	product = models.OneToOneField(Product, 
 		on_delete=models.PROTECT,
@@ -38,5 +31,3 @@ class Favorite(models.Model):
 
 	def __str__(self):
 		return self.product
-
-
