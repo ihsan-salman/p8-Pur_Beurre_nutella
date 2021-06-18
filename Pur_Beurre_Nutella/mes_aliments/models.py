@@ -10,12 +10,12 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-	name = models.CharField(max_length=200, unique=True)
-	brands = models.CharField(max_length=200)
-	nutriscore_grade = models.CharField(max_length=1)
+	name = models.CharField(max_length=400, unique=False)
+	brands = models.CharField(max_length=400)
+	nutriscore_grade = models.CharField(max_length=10)
 	url = models.URLField()
-	stores = models.CharField(max_length=200)
-	category = models.ForeignKey(Category, on_delete=models.PROTECT)
+	stores = models.CharField(max_length=400, null=True)
+	category = models.ForeignKey(Category, on_delete=models.PROTECT, default='DEFAULT VALUE')
 	
 	def __str__(self):
 		return self.name
