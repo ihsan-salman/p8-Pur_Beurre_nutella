@@ -1,7 +1,8 @@
 #from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
+from django.contrib.auth import authenticate, login
 
 
 from .models import Category, Product, Favorite, Contact
@@ -17,8 +18,7 @@ def product(request):
     template = loader.get_template('mes_aliments/mes_produits.html')
     return HttpResponse(template.render(request=request))
 
-def connexion(request):
-    template = loader.get_template('mes_aliments/mon_compte.html')
+def create(request):
     context = {}
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -37,12 +37,20 @@ def connexion(request):
                 )
             else:
                 contact = contact.first()
+
+            return redirect('/')
         else:
             # Form data doesn't match the expected format.
             # Add errors to the template.
             context['errors'] = form.errors.items()
     else:
         form = ContactForm()
-    context['form'] = form
-    return render(request, 'mes_aliments/mon_compte.html', context)
+    return render(request, 'mes_aliments/create.html', {'form':form})
+
+def login(request):
+    form = ContactForm()
+    if request.method == 'POST':
+        if form.is_valid():
+            print(forms.name)
+    return render (request, 'mes_aliments/login.html', {'form':form})
 

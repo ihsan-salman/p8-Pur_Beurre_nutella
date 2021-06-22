@@ -23,8 +23,10 @@ from mes_aliments import views
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^mes_produits/', views.product),
-    url(r'^mon_compte/', views.connexion, name='connexion'),
+    url(r'^create/', views.create, name='create'),
+    url(r'^login/', views.login, name='login'),
     path('admin/', admin.site.urls),
+    path('login/', include("django.contrib.auth.urls")),
 ]
 
 if settings.DEBUG:
