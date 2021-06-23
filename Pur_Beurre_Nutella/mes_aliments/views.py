@@ -45,9 +45,9 @@ def create(request):
             context['errors'] = form.errors.items()
     else:
         form = ContactForm()
-    return render(request, 'mes_aliments/create.html', {'form':form})
+    return render(request, 'mes_aliments/registration/create.html', {'form':form})
 
-def login(request):
+"""def login(request):
     form = ContactForm()
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -55,5 +55,5 @@ def login(request):
         contact = Contact.objects.filter(name=name)
         if contact.exists():
             return redirect('/')
-    return render (request, 'mes_aliments/registration/login.html', {'form':form})
+    return render (request, 'mes_aliments/registration/login.html', {'form':form})"""
 

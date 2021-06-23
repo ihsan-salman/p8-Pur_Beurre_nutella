@@ -4,10 +4,9 @@
 		<!-- Masthead-->
         <header id="masthead">
             <div class="container px-4 px-lg-5 h-50" style="margin-top: 100px">
-              <form class="form-inline" action="{% url 'login' %}" method="post">
+              <form class="form-inline" action="{% url '/' %}" method="post">
                     {% csrf_token %}
                      <div class="form-group {% if form.name.errors %}has-warning has-feedback{% endif %}">
-                      
                         <label for="{{ form.name.id_for_label }}" class="control-label">Nom</label>
                         {{ form.name }}
                     </div>
