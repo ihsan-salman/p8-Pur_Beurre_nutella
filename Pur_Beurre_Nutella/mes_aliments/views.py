@@ -50,7 +50,10 @@ def create(request):
 def login(request):
     form = ContactForm()
     if request.method == 'POST':
-        if form.is_valid():
-            print(forms.name)
-    return render (request, 'mes_aliments/login.html', {'form':form})
+        name = request.POST.get('name')
+        password = request.POST.get('password')
+        contact = Contact.objects.filter(name=name)
+        if contact.exists():
+            return redirect('/')
+    return render (request, 'mes_aliments/registration/login.html', {'form':form})
 
