@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 
 
 from .models import Category, Product, Favorite, Contact
@@ -12,12 +13,6 @@ from .forms import RegisterForm
 
 def index(request):
     template = loader.get_template('mes_aliments/index.html')
-    if request.user.is_authenticated:
-    # Do something for authenticated users.
-        print('You are connected')
-    else:
-    # Do something for anonymous users.
-        ...
     return HttpResponse(template.render(request=request))
 
 def product(request):
