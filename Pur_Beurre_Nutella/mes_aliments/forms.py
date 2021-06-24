@@ -1,19 +1,11 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
-class ContactForm(forms.Form):
-    name = forms.CharField(
-        label='Nom',
-        max_length=100,
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        required=True
-        )
-    password = forms.CharField(
-        label='Mot de passe',
-        max_length=100,
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        required=True
-        )
-    email = forms.EmailField(
-        label='Email',
-        widget=forms.EmailInput(attrs={'class': 'form-control'}),
-        required=True)
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ["username", "email", "password1", "password2"]
+    

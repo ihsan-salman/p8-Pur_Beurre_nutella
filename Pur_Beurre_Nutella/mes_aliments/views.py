@@ -6,12 +6,18 @@ from django.contrib.auth import authenticate, login
 
 
 from .models import Category, Product, Favorite, Contact
-from .forms import ContactForm
+from .forms import RegisterForm
 
 # Create your views here.
 
 def index(request):
     template = loader.get_template('mes_aliments/index.html')
+    if request.user.is_authenticated:
+    # Do something for authenticated users.
+        print('You are connected')
+    else:
+    # Do something for anonymous users.
+        ...
     return HttpResponse(template.render(request=request))
 
 def product(request):
@@ -21,11 +27,11 @@ def product(request):
 def create(request):
     context = {}
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
-            name = form.cleaned_data['name']
-            password = form.cleaned_data['password']
+            name = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
 
             contact = Contact.objects.filter(email=email)
             if not contact.exists():
@@ -44,16 +50,5 @@ def create(request):
             # Add errors to the template.
             context['errors'] = form.errors.items()
     else:
-        form = ContactForm()
-    return render(request, 'mes_aliments/registration/create.html', {'form':form})
-
-"""def login(request):
-    form = ContactForm()
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        password = request.POST.get('password')
-        contact = Contact.objects.filter(name=name)
-        if contact.exists():
-            return redirect('/')
-    return render (request, 'mes_aliments/registration/login.html', {'form':form})"""
-
+        form = RegisterForm()
+    return render(request, 'registration/create.html', {'form':form})

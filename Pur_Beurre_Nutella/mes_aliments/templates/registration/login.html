@@ -6,8 +6,7 @@
             <div class="container px-4 px-lg-5 h-50" style="margin-top: 100px">
               <form class="form-inline" action="{% url 'login' %}" method="post">
                     {% csrf_token %}
-                        {{form}}
-                    </div>
+                        {{form.as_p}}
                     <button type="submit" class="btn btn-success">Entrer</button>
                     <p>Vous n'avez pas encore de compte ? Créez en un <a href="/create">ici</a></p>
                 </form>
