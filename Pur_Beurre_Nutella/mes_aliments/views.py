@@ -15,7 +15,9 @@ def index(request):
 
 def product(request):
     template = loader.get_template('mes_aliments/mes_produits.html')
-    return HttpResponse(template.render(request=request))
+    category = Category.objects.all()
+    context =  {'category':category}
+    return HttpResponse(template.render(context, request=request))
 
 def create(request):
     context = {}

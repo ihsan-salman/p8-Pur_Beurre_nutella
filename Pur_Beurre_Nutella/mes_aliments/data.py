@@ -32,6 +32,7 @@ class Psql_data:
             for value in self.category_name:
                 self.payload = {"search_terms": value,
                                 "json": 1,
+                                "charset": "windows-1252",
                                 "action": "process",
                                 "lang": "fr",
                                 "page_size": "100",

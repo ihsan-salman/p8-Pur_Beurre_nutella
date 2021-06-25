@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from mes_aliments.psql import Psql_data
+from mes_aliments.data import Psql_data
 
 class Command(BaseCommand):
     args = '<team_id>'
