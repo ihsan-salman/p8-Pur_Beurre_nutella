@@ -9,8 +9,11 @@
                     Trouvez un produit de substitution pour ceux que vous consommez tous les jours.
                 </h2>
                 <div class="text-center">
-                    <input type="text" id="text_input" placeholder="Produit" size="30">
-                    <button id="button">Chercher</button>
+                    <form action="{% url 'mes_produits' %}" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="request_search" id="text_input" placeholder="Produit" size="30">
+                        <button id="button">Chercher</button>
+                    </form>
                 </div>
             </div>
         </header>

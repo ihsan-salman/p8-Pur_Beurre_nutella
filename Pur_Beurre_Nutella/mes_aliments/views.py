@@ -15,8 +15,11 @@ def index(request):
 
 def product(request):
     template = loader.get_template('mes_aliments/mes_produits.html')
-    category = Category.objects.all()
-    context =  {'category':category}
+    product = Product.objects.all()
+    context =  {'product':product}
+    if request.method == 'POST':
+        ihsan = request.POST.get('request_search')
+        print(ihsan)
     return HttpResponse(template.render(context, request=request))
 
 def create(request):
