@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 
 
 from .models import Category, Product, Favorite, Contact
@@ -27,18 +28,18 @@ def create(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
-            name = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-
+            email = request.POST.get('email')
+            name = request.POST.get('username')
+            password = make_password(request.POST.get('password1'))
             contact = Contact.objects.filter(email=email)
             if not contact.exists():
                 # If a contact is not registered, create a new one.
-                contact = User.objects.create(
-                    email=email,
+                user = User.objects.create(
                     username=name,
+                    email=email,
                     password=password
                 )
+                user.save()
             else:
                 contact = contact.first()
 
