@@ -2,6 +2,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
+from django.contrib.auth.models import User
 
 
 from .models import Category, Product, Favorite, Contact
@@ -33,9 +34,9 @@ def create(request):
             contact = Contact.objects.filter(email=email)
             if not contact.exists():
                 # If a contact is not registered, create a new one.
-                contact = Contact.objects.create(
+                contact = User.objects.create(
                     email=email,
-                    name=name,
+                    username=name,
                     password=password
                 )
             else:
