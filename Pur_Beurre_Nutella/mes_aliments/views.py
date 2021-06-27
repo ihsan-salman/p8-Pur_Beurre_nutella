@@ -19,7 +19,7 @@ def product(request):
     template = loader.get_template('mes_aliments/mes_produits.html')
     if request.method == 'POST':
         search_request = request.POST.get('request_search')
-        product_search = Product.objects.filter(name=search_request)
+        product_search = Product.objects.filter(name__icontains=search_request)
     context =  {'product':product_search}
     return HttpResponse(template.render(context, request=request))
 
