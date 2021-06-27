@@ -1,9 +1,13 @@
-#from django.shortcuts import render
+'''!/usr/bin/python3
+   -*- coding: Utf-8 -'''
+
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 from .models import Category, Product, Favorite, Contact

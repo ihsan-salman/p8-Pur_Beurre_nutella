@@ -1,15 +1,16 @@
-""" """
+'''!/usr/bin/python3
+   -*- coding: Utf-8 -'''
 
 
 import requests
-from mes_aliments.models import Category, Product, Favorite
+from mes_aliments.models import Category, Product
 
 class Psql_data:
-    """ """
+    """ data insertion in purbeurre database """
 
     def __init__(self):
         """init the class"""
-        self.category_name = ['Pizza', 'boisson', 
+        self.category_name = ['Pizza', 'boisson',
                               'dessert', 'salade', "cookie"]
         self.url = "https://fr.openfoodfacts.org/cgi/search.pl?"
         self.product_categorie = []
@@ -52,7 +53,7 @@ class Psql_data:
             for i in range(len(self.category_name)):
                 for product in self.product_categorie[i]['products']:
                     self.name = product.get('product_name')
-                    self.brands = product.get('brands'),
+                    self.brands = product.get("brands"),
                     self.nutriscore_grade = product.get('nutriscore_grade'),
                     self.url = product.get('url'),
                     self.stores = product.get('stores')
