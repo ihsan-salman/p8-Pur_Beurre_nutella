@@ -46,6 +46,7 @@ class Psql_data:
                 # Add all json data in a list to make easier the usage
                 self.product_categorie.append(self.json_category)
 
+
     def insert_product_data(self):
         """Insert and Save the data of each product in the database"""
         self.input_data = []

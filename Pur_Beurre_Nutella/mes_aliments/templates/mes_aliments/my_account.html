@@ -4,11 +4,8 @@
 	<!-- Masthead-->
         <header id="masthead">
             <div class="container px-4 px-lg-5 h-50" style="margin-top: 100px">
-                <ul>
-                {% for product in products %}
-                    <li>{{product.url}}</li>
-                {% endfor %}
-                </ul>
+                {{user.username}}</br>
+                {{user.email}}
             </div>
         </header>
 {% endblock %}

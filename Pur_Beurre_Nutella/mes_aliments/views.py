@@ -24,7 +24,7 @@ def product(request):
     if request.method == 'POST':
         search_request = request.POST.get('request_search')
         product_search = Product.objects.filter(name__icontains=search_request)
-    context =  {'product':product_search}
+    context =  {'products':product_search}
     return HttpResponse(template.render(context, request=request))
 
 def create(request):
@@ -55,3 +55,8 @@ def create(request):
     else:
         form = RegisterForm()
     return render(request, 'registration/create.html', {'form':form})
+
+def my_account(request):
+    template = loader.get_template('mes_aliments/my_account.html')
+    user = User
+    return HttpResponse(template.render(request=request))
