@@ -24,7 +24,8 @@ def product(request):
     if request.method == 'POST':
         search_request = request.POST.get('request_search')
         product_search = Product.objects.filter(name__icontains=search_request)
-    context =  {'products':product_search}
+    url = 'https://fr.openfoodfacts.org/produit/3242272346050/dolce-pizza-prosciutto-sodebo'
+    context =  {'products':product_search, 'url':url}
     return HttpResponse(template.render(context, request=request))
 
 def create(request):
@@ -58,5 +59,5 @@ def create(request):
 
 def my_account(request):
     template = loader.get_template('mes_aliments/my_account.html')
-    user = User
+    user = User.objects.get(name='')
     return HttpResponse(template.render(request=request))
