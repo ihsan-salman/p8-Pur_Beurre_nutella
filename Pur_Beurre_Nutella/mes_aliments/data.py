@@ -57,12 +57,14 @@ class Psql_data:
                     self.brands = product.get("brands"),
                     self.nutriscore_grade = product.get('nutriscore_grade'),
                     self.url = product.get('url'),
+                    self.image = product.get('image_url'),
                     self.stores = product.get('stores')
                     self.input_data_product = Product(
                         name=self.name,
                         brands=self.brands,
                         nutriscore_grade=self.nutriscore_grade,
                         url=self.url,
+                        image=self.image,
                         stores=self.stores)
                     self.input_data_product.category = Category.objects.get(id=i + 1)
                     self.input_data_product.save()

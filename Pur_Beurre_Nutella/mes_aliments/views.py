@@ -8,6 +8,7 @@ from django.template import loader
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from .helper.functions import parse
 
 
 from .models import Category, Product, Favorite, Contact
@@ -20,12 +21,15 @@ def index(request):
     return HttpResponse(template.render(request=request))
 
 def product(request):
+    product_images = []
     template = loader.get_template('mes_aliments/mes_produits.html')
     if request.method == 'POST':
         search_request = request.POST.get('request_search')
         product_search = Product.objects.filter(name__icontains=search_request)
-    url = 'https://fr.openfoodfacts.org/produit/3242272346050/dolce-pizza-prosciutto-sodebo'
-    context =  {'products':product_search, 'url':url}
+    for data in product_search:
+        parsed_data = parse(data.image)
+        product_images.append(parsed_data)
+    context =  {'products':product_search, 'urls':product_images}
     return HttpResponse(template.render(context, request=request))
 
 def create(request):

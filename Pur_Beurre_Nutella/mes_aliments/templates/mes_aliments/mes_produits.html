@@ -4,11 +4,18 @@
 	<!-- Masthead-->
         <header id="masthead">
             <div class="container px-4 px-lg-5 h-50" style="margin-top: 100px">
-                <ul>
-                {% for product in products %}
-                    <li>{{product.url}}<a href="{{ url }}">ihsan</a></li>
-                {% endfor %}
-                </ul>
+                {% if products|length_is:"0" %}
+                    Palsambleu ! Nous n'avons trouvé aucun résultat à cette requête. Même pas de quoi se ronger la chique !
+                    Partez de nouveau à l'abordage !
+
+                {% else %}
+                {% load multifor %}
+                    {% for product in products; url in urls %}
+                        <img src="{{ url }}">
+                        {{ product }}
+                        {% if forloop.counter|divisibleby:3 %}{% endif %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </header>
 {% endblock %}
