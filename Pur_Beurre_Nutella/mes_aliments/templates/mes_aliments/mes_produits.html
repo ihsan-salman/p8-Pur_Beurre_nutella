@@ -11,8 +11,8 @@
                 {% else %}
                 {% load multifor %}
                     {% for product in products; url in urls %}
-                        <img src="{{ url }}">
-                        {{ product }}
+                        <p><img src="{{ url }}" height="300" width="300">
+                        {{ product }}</p>
                         {% if forloop.counter|divisibleby:3 %}{% endif %}
                     {% endfor %}
                 {% endif %}
