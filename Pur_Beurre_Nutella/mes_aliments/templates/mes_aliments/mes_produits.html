@@ -11,9 +11,13 @@
                 {% else %}
                 {% load multifor %}
                     {% for product in products; url in urls %}
-                        <p><img src="{{ url }}" height="300" width="300">
-                        {{ product }}</p>
                         {% if forloop.counter|divisibleby:3 %}{% endif %}
+                            <a href="{% url 'my_product' product.id %}">
+                                <p>
+                                    <img src="{{ url }}" height="300" width="300">
+                                    {{ product }}
+                                <p>
+                            </a>
                     {% endfor %}
                 {% endif %}
             </div>

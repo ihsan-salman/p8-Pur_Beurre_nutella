@@ -8,7 +8,7 @@ from django.template import loader
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from .helper.functions import parse
+from .helper.functions import parse_request, parse_path
 
 
 from .models import Category, Product, Favorite, Contact
@@ -20,6 +20,7 @@ def index(request):
     template = loader.get_template('mes_aliments/index.html')
     return HttpResponse(template.render(request=request))
 
+
 def product(request):
     product_images = []
     template = loader.get_template('mes_aliments/mes_produits.html')
@@ -27,10 +28,25 @@ def product(request):
         search_request = request.POST.get('request_search')
         product_search = Product.objects.filter(name__icontains=search_request)
     for data in product_search:
-        parsed_data = parse(data.image)
+        parsed_data = parse_request(data.image)
         product_images.append(parsed_data)
     context =  {'products':product_search, 'urls':product_images}
     return HttpResponse(template.render(context, request=request))
+
+
+def detail(request, **kwargs):
+    product_image = []
+    template = loader.get_template('mes_aliments/mon_produit.html')
+    parsed_path = parse_path(request.path)
+    if request.method == 'GET':
+        product_search = Product.objects.filter(id=parsed_path)
+    for data in product_search:
+        parsed_data = parse_request(data.image)
+        product_image.append(parsed_data)
+    print(product_image)
+    context = {'product':product_search, 'image_url':product_images}
+    return HttpResponse(template.render(context, request=request))
+
 
 def create(request):
     context = {}
@@ -60,6 +76,7 @@ def create(request):
     else:
         form = RegisterForm()
     return render(request, 'registration/create.html', {'form':form})
+
 
 def my_account(request):
     template = loader.get_template('mes_aliments/my_account.html')
