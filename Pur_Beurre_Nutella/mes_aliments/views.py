@@ -34,7 +34,7 @@ def product(request):
     return HttpResponse(template.render(context, request=request))
 
 
-def detail(request, pk):
+def detail_product(request, pk):
     product_image = []
     template = loader.get_template('mes_aliments/mon_produit.html')
     if request.method == 'GET':
@@ -53,19 +53,34 @@ def detail(request, pk):
 
 def substitute(request, pk):
     template = loader.get_template('mes_aliments/mon_substitut.html')
-    context = {}
+    product_images = []
+    products_nutriscore = []
     if request.method == 'GET':
         product_search = Product.objects.get(pk=pk)
     product_nutriscore = parse_request(product_search.nutriscore_grade)
     if product_nutriscore == 'e':
-        list_score = ['d', 'c', 'b', 'a']
+        list_score = ["('d',)","('c',)", "('b',)", "('a',)"]
         substitute_search = Product.objects.filter(category_id=product_search.category_id).filter(nutriscore_grade__in=list_score)
-        context = {'substitute':substitute_search}
+    elif product_nutriscore == 'd':
+        list_score = ["('c',)", "('b',)", "('a',)"]
+        substitute_search = Product.objects.filter(nutriscore_grade__in=list_score).filter(category_id=product_search.category_id)
     elif product_nutriscore == 'c':
-        list_score = ["('b',)"]
-        substitute_search = Product.objects.filter(nutriscore_grade__in=list_score)
-        context = {'substitute':substitute_search}
-        print(substitute_search)
+        list_score = ["('c',)", "('b',)", "('a',)"]
+        substitute_search = Product.objects.filter(nutriscore_grade__in=list_score).filter(category_id=product_search.category_id)
+    elif product_nutriscore == 'b':
+        list_score = ["('b',)", "('a',)"]
+        substitute_search = Product.objects.filter(nutriscore_grade__in=list_score).filter(category_id=product_search.category_id)
+    else:
+        list_score = ["('a',)"]
+        substitute_search = Product.objects.filter(nutriscore_grade__in=list_score).filter(category_id=product_search.category_id)
+    for data in substitute_search:
+        parsed_data = parse_request(data.image)
+        product_images.append(parsed_data)
+        parsed_nutriscore_data = parse_request(data.nutriscore_grade)
+        products_nutriscore.append(parsed_nutriscore_data)
+    context = {'substitute':substitute_search,
+               'images_url':product_images,
+               'nutriscores':products_nutriscore}
     return HttpResponse(template.render(context, request=request))
 
 def create(request):

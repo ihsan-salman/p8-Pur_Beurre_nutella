@@ -10,14 +10,13 @@
 
                 {% else %}
                 {% load multifor %}
-                    {% for product in substitute %}
-                        {% if forloop.counter|divisibleby:3 %}{% endif %}
-                            <a href="{% url 'my_product' product.id %}">
-                                <p>
-                                    <img src="" height="300" width="300">
-                                    {{ product }}
-                                <p>
-                            </a>
+                    {% for product in substitute; url in images_url; nutriscore in nutriscores %}  
+                            <div>
+                                <img src="{{ url }}" height="300" width="300" style="z-index: 1;position: relative;">
+                                <div style="float: right; margin-right: 74%;font-size: 30px">{{ nutriscore }}</div>
+                            </div>
+                            {{ product }}
+                    {% if forloop.counter|divisibleby:3 %}{% endif %}  
                     {% endfor %}
                 {% endif %}
             </div>
