@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^mes_produits/', views.product, name='mes_produits'),
     url(r'^mon_compte/', views.my_account, name='mon_compte'),
     url(r'^mon_produit/(?P<pk>\d+)/$', views.detail, name='my_product'),
+    url(r'^mon_produit/(?P<pk>\d+)/mon_substitut/', views.substitute, name='my_substitut'),
     url(r'^create/', views.create, name='create'),
     path('login/',auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     url(r'^logout/$', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),

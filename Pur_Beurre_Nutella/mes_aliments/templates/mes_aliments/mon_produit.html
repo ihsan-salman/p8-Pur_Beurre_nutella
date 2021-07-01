@@ -4,7 +4,26 @@
 	<!-- Masthead-->
         <header id="masthead">
             <div class="container px-4 px-lg-5 h-50" style="margin-top: 100px">
-                
+                {% load multifor %}
+                {% for data in product; img in image_url %}
+                    <div class="text-center">
+                        <img src="{{ img }}">
+                        <h2>{{ data }}</h2>
+                    </div>
+                    <div style="margin-top: 50px">
+                        <div style="float: left;margin-left: 20%">
+                            <p style="font-size: 25px;">Nutriscore</p>
+                            {{ nutriscore }}
+                        </div>
+                        <p style="margin-left: 70%;margin-top: 10px;font-size: 25px;">
+                            Repères nutritionnels pour 100 g
+                        </p>
+                    </div>
+                    <div style="margin-top: 40px" class="text-center">
+                        <a href="{{ product_url }}" target="_blank" style="border: 3px solid;padding-top: 4px;padding-right: 7px;padding-left: 7px;float: left;">Voir la fiche d'OpenFoodFacts</a>
+                        <a href="mon_substitut">Choisir un substitut à ce produit</a>
+                    </div>
+                {% endfor %}
             </div>
         </header>
 {% endblock %}

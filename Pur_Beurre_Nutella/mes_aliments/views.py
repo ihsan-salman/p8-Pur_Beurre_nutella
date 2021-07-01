@@ -8,8 +8,8 @@ from django.template import loader
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 from .helper.functions import parse_request
-
 
 from .models import Category, Product, Favorite, Contact
 from .forms import RegisterForm
@@ -40,12 +40,33 @@ def detail(request, pk):
     if request.method == 'GET':
         product_search = Product.objects.filter(id=pk)
     for data in product_search:
-        parsed_data = parse_request(data.image)
-        product_image.append(parsed_data)
-    print(product_image)
-    context = {'product':product_search, 'image_url':product_image}
+        parsed_image_data = parse_request(data.image)
+        product_image.append(parsed_image_data)
+        parsed_nutriscore_data = parse_request(data.nutriscore_grade)
+        parsed_url = parse_request(data.url)
+    context = {'product':product_search,
+               'image_url':product_image,
+               'nutriscore':parsed_nutriscore_data,
+               'product_url': parsed_url}
     return HttpResponse(template.render(context, request=request))
 
+
+def substitute(request, pk):
+    template = loader.get_template('mes_aliments/mon_substitut.html')
+    context = {}
+    if request.method == 'GET':
+        product_search = Product.objects.get(pk=pk)
+    product_nutriscore = parse_request(product_search.nutriscore_grade)
+    if product_nutriscore == 'e':
+        list_score = ['d', 'c', 'b', 'a']
+        substitute_search = Product.objects.filter(category_id=product_search.category_id).filter(nutriscore_grade__in=list_score)
+        context = {'substitute':substitute_search}
+    elif product_nutriscore == 'c':
+        list_score = ["('b',)"]
+        substitute_search = Product.objects.filter(nutriscore_grade__in=list_score)
+        context = {'substitute':substitute_search}
+        print(substitute_search)
+    return HttpResponse(template.render(context, request=request))
 
 def create(request):
     context = {}
