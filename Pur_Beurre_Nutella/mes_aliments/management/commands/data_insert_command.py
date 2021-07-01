@@ -1,10 +1,16 @@
+'''!/usr/bin/python3
+   -*- coding: Utf-8 -'''
+
 from django.core.management.base import BaseCommand
 
-from mes_aliments.data import Psql_data
+from .mes_aliments.data import PsqlData
+
 
 class Command(BaseCommand):
+    '''Command class'''
     args = '<team_id>'
     help = 'Affiche la liste des backlogs'
 
     def handle(self, *args, **options):
-    	self.psql_data = Psql_data()
+        '''return the instance of the imported class'''
+        self.psql_data = PsqlData()

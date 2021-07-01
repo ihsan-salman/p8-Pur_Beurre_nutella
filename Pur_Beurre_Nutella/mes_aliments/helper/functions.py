@@ -2,9 +2,10 @@
    -*- coding: Utf-8 -'''
 
 
-def parse_request(url):
+def parse_request(info):
+    '''parse the information given in entry'''
     parsed_letter = []
-    for letter in url:
+    for letter in info:
         if letter not in ("'", "(", ",", ")"):
             parsed_letter.append(letter)
     parsed_info = ''.join(parsed_letter)

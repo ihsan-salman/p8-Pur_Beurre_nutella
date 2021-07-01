@@ -5,7 +5,8 @@
 import requests
 from mes_aliments.models import Category, Product
 
-class Psql_data:
+
+class PsqlData:
     """ data insertion in purbeurre database """
 
     def __init__(self):
@@ -26,7 +27,6 @@ class Psql_data:
                 self.input_data = Category(name=name)
                 self.input_data.save()
 
-
     def get_data_openfoodfacts(self):
         """Get data from the API of OpenFoodFacts"""
         if Product.objects.count() != 500:
@@ -40,12 +40,12 @@ class Psql_data:
                                 "page": "1"
                                 }
                 # Request to the API
-                self.json_request = requests.get(self.url, params=self.payload,)
+                self.json_request = requests.get(self.url,
+                                                 params=self.payload,)
                 # Export data as json data
                 self.json_category = self.json_request.json()
                 # Add all json data in a list to make easier the usage
                 self.product_categorie.append(self.json_category)
-
 
     def insert_product_data(self):
         """Insert and Save the data of each product in the database"""
@@ -54,10 +54,10 @@ class Psql_data:
             for i in range(len(self.category_name)):
                 for product in self.product_categorie[i]['products']:
                     self.name = product.get('product_name')
-                    self.brands = product.get("brands"),
-                    self.nutriscore_grade = product.get('nutriscore_grade'),
-                    self.url = product.get('url'),
-                    self.image = product.get('image_url'),
+                    self.brands = product.get("brands")
+                    self.nutriscore_grade = product.get('nutriscore_grade')
+                    self.url = product.get('url')
+                    self.image = product.get('image_url')
                     self.stores = product.get('stores')
                     self.input_data_product = Product(
                         name=self.name,
@@ -66,5 +66,6 @@ class Psql_data:
                         url=self.url,
                         image=self.image,
                         stores=self.stores)
-                    self.input_data_product.category = Category.objects.get(id=i + 1)
+                    self.input_data_product.category = Category.objects.get(
+                        id=i + 1)
                     self.input_data_product.save()
