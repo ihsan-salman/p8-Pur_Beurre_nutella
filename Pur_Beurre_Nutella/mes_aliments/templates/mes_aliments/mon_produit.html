@@ -6,9 +6,27 @@
             <div class="container px-4 px-lg-5 h-50" style="margin-top: 100px">
                 {% load multifor %}
                 {% for data in product; img in image_url %}
-                    <div class="text-center">
-                        <img src="{{ img }}">
-                        <h2>{{ data }}</h2>
+                    <div class="text-center" id="product_detail">
+                        <style type="text/css">
+                        #product_detail
+                        {
+                            background-image: url('{{img}}');
+                            height: 400px;
+                            width: 32%;
+                            color: black;
+                            margin-left: 30%;
+                        }
+                        #product_name
+                        {   
+                            border: solid;
+                            border-color: black;
+                            border-radius: 20px;
+                            color: white;
+                            background-color: black;
+                            margin-top: 30px;
+                        }
+                        </style>
+                        <div id="product_name"><h2>{{ data }}</h2></div>
                     </div>
                     <div style="margin-top: 50px">
                         <div style="float: left;margin-left: 20%">
