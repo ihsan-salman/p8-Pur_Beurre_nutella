@@ -26,7 +26,9 @@ def product(request):
     template = loader.get_template('mes_aliments/mes_produits.html')
     if request.method == 'POST':
         search_request = request.POST.get('request_search')
+        #product_search1 = Product.objects.get(name__icontains=search_request)
         product_search = Product.objects.filter(name__icontains=search_request)
+    print(product_search[1])
     for data in product_search:
         parsed_data = parse_request(data.image)
         product_images.append(parsed_data)
