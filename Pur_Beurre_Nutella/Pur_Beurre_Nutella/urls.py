@@ -23,7 +23,7 @@ from django.contrib.auth.views import LogoutView
 from mes_aliments import views
 
 urlpatterns = [
-    url(r'^$', views.index),
+    url(r'^$', views.index, name='home'),
     url(r'^mes_produits/', views.product, name='mes_produits'),
     url(r'^mon_compte/', views.my_account, name='mon_compte'),
     url(r'^mon_produit/(?P<pk>\d+)/$', views.detail_product,

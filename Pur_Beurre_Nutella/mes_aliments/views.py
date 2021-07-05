@@ -75,7 +75,6 @@ def product(request):
                'substitutes_image': substitutes_image}
     return HttpResponse(template.render(context, request=request))
 
-
 def detail_product(request, pk):
     '''get the pk of the product and return the detail of the product'''
     product_image = []
