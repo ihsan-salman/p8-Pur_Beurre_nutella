@@ -9,15 +9,20 @@
                     Partez de nouveau à l'abordage !
 
                 {% else %}
-                {% load multifor %}
-                    {% for product in products; url in urls %}
-                        {% if forloop.counter|divisibleby:3 %}{% endif %}
-                            <a href="{% url 'my_product' product.id %}">
-                                <p>
-                                    <img src="{{ url }}" height="300" width="300">
-                                    {{ product }}
-                                <p>
+                    <a href="{% url 'my_product' product.id %}">
+                        <p>
+                            <img src="{{ product_url }}" height="300" width="300">
+                            {{ product }}
+                        <p>
+                    </a>
+                    {% load multifor %}
+                    {% for substitute in substitutes; substitute_nutri in substitutes_nutriscore; substitute_img in substitutes_image %}
+                        <div>
+                            <a href="{% url 'my_product' substitute.id %}">
+                                <img src="{{ substitute_img }}" height="300" width="300" style="z-index: 1;position: relative;">
+                                <div style="float: right; margin-right: 74%;font-size: 30px">{{ substitute_nutri }}</div>
                             </a>
+                        </div>
                     {% endfor %}
                 {% endif %}
             </div>

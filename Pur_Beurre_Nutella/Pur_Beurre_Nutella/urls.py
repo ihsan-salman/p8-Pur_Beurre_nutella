@@ -28,8 +28,6 @@ urlpatterns = [
     url(r'^mon_compte/', views.my_account, name='mon_compte'),
     url(r'^mon_produit/(?P<pk>\d+)/$', views.detail_product,
         name='my_product'),
-    url(r'^mon_produit/(?P<pk>\d+)/mon_substitut/', views.substitute,
-        name='my_substitut'),
     url(r'^create/', views.create, name='create'),
     path('login/', auth_views.LoginView.as_view(
         template_name='registration/login.html'), name='login'),

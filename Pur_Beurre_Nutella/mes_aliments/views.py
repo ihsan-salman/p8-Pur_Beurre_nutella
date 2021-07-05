@@ -22,17 +22,57 @@ def index(request):
 
 def product(request):
     '''get the user's query and return the related product'''
-    product_images = []
+    substitutes_image = []
+    substitutes_nutriscore = []
     template = loader.get_template('mes_aliments/mes_produits.html')
     if request.method == 'POST':
         search_request = request.POST.get('request_search')
-        #product_search1 = Product.objects.get(name__icontains=search_request)
-        product_search = Product.objects.filter(name__icontains=search_request)
-    print(product_search[1])
-    for data in product_search:
-        parsed_data = parse_request(data.image)
-        product_images.append(parsed_data)
-    context = {'products': product_search, 'urls': product_images}
+        product_search = Product.objects.filter(
+            name__icontains=search_request)
+    my_product = product_search[0]
+    my_product_nutriscore = parse_request(my_product.nutriscore_grade)
+    if my_product_nutriscore == 'e':
+        list_score = ["('d',)", "('c',)", "('b',)", "('a',)"]
+        substitute_search = Product.objects.filter(
+            category_id=my_product.category_id).filter(
+            nutriscore_grade__in=list_score).exclude(
+            id=my_product.id)
+    elif my_product_nutriscore == 'd':
+        list_score = ["('c',)", "('b',)", "('a',)"]
+        substitute_search = Product.objects.filter(
+            nutriscore_grade__in=list_score).filter(
+            category_id=my_product.category_id).exclude(
+            id=my_product.id)
+    elif my_product_nutriscore == 'c':
+        list_score = ["('c',)", "('b',)", "('a',)"]
+        substitute_search = Product.objects.filter(
+            nutriscore_grade__in=list_score).filter(
+            category_id=my_product.category_id).exclude(
+            id=my_product.id)
+    elif my_product_nutriscore == 'b':
+        list_score = ["('b',)", "('a',)"]
+        substitute_search = Product.objects.filter(
+            nutriscore_grade__in=list_score).filter(
+            category_id=my_product.category_id).exclude(
+            id=my_product.id)
+    else:
+        list_score = ["('a',)"]
+        substitute_search = Product.objects.filter(
+            nutriscore_grade__in=list_score).filter(
+            category_id=my_product.category_id).exclude(
+            id=my_product.id)
+    product_img = parse_request(my_product.image)
+    product_nutriscore = parse_request(my_product.nutriscore_grade)
+    for data in substitute_search:
+        parsed_nutriscore_data = parse_request(data.nutriscore_grade)
+        substitutes_nutriscore.append(parsed_nutriscore_data)
+        parsed_img_data = parse_request(data.image)
+        substitutes_image.append(parsed_img_data)
+    context = {'product': my_product,
+               'product_url': product_img,
+               'substitutes': substitute_search,
+               'substitutes_nutriscore':substitutes_nutriscore,
+               'substitutes_image': substitutes_image}
     return HttpResponse(template.render(context, request=request))
 
 
@@ -51,51 +91,6 @@ def detail_product(request, pk):
                'image_url': product_image,
                'nutriscore': parsed_nutriscore_data,
                'product_url': parsed_url}
-    return HttpResponse(template.render(context, request=request))
-
-
-def substitute(request, pk):
-    '''get the pk of the product choose by the user
-       and return a list of substitute'''
-    template = loader.get_template('mes_aliments/mon_substitut.html')
-    product_images = []
-    products_nutriscore = []
-    if request.method == 'GET':
-        product_search = Product.objects.get(pk=pk)
-    product_nutriscore = parse_request(product_search.nutriscore_grade)
-    if product_nutriscore == 'e':
-        list_score = ["('d',)", "('c',)", "('b',)", "('a',)"]
-        substitute_search = Product.objects.filter(
-            category_id=product_search.category_id).filter(
-            nutriscore_grade__in=list_score)
-    elif product_nutriscore == 'd':
-        list_score = ["('c',)", "('b',)", "('a',)"]
-        substitute_search = Product.objects.filter(
-            nutriscore_grade__in=list_score).filter(
-            category_id=product_search.category_id)
-    elif product_nutriscore == 'c':
-        list_score = ["('c',)", "('b',)", "('a',)"]
-        substitute_search = Product.objects.filter(
-            nutriscore_grade__in=list_score).filter(
-            category_id=product_search.category_id)
-    elif product_nutriscore == 'b':
-        list_score = ["('b',)", "('a',)"]
-        substitute_search = Product.objects.filter(
-            nutriscore_grade__in=list_score).filter(
-            category_id=product_search.category_id)
-    else:
-        list_score = ["('a',)"]
-        substitute_search = Product.objects.filter(
-            nutriscore_grade__in=list_score).filter(
-            category_id=product_search.category_id)
-    for data in substitute_search:
-        parsed_data = parse_request(data.image)
-        product_images.append(parsed_data)
-        parsed_nutriscore_data = parse_request(data.nutriscore_grade)
-        products_nutriscore.append(parsed_nutriscore_data)
-    context = {'substitute': substitute_search,
-               'images_url': product_images,
-               'nutriscores': products_nutriscore}
     return HttpResponse(template.render(context, request=request))
 
 
