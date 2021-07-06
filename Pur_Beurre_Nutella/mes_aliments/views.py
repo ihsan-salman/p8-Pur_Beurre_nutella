@@ -17,6 +17,9 @@ from .forms import RegisterForm
 def index(request):
     '''return index template'''
     template = loader.get_template('mes_aliments/index.html')
+    if request.method == 'POST':
+        print(request.POST.get('pk_prod'))
+        print(request.POST.get('pk_subs'))
     return HttpResponse(template.render(request=request))
 
 
