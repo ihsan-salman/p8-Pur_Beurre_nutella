@@ -3,44 +3,44 @@
 {% block content %}
 
 {% load static %}
-	<!-- Masthead-->
-        <header id="masthead">
-            <div class="container px-4 px-lg-5 h-50" style="margin-top: 100px">
-                {% if products|length_is:"0" %}
+	<!-- subsitute-->
+        <section style="background-color: #DE9440; margin-top: 100px;">
+            {% if products|length_is:"0" %}
                     Palsambleu ! Nous n'avons trouvé aucun résultat à cette requête. Même pas de quoi se ronger la chique !
                     Partez de nouveau à l'abordage !
 
-                {% else %}
-                    <a href="{% url 'my_product' product.id %}">
-                        <p>
-                            <img src="{{ product_url }}" height="300" width="300">
-                            {{ product }}
-                        <p>
-                    </a>
-                    {% load multifor %}
-                    {% for substitute in substitutes; substitute_nutri in substitutes_nutriscore; substitute_img in substitutes_image %}
-                        <div>
-                            <a href="{% url 'my_product' substitute.id %}">
-                                <img src="{{ substitute_img }}" height="300" width="300" style="z-index: 1;position: relative;">
-                                <div style="float: right; margin-right: 74%;font-size: 30px">{{ substitute_nutri }}</div>
-                            </a>
-                            <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
-                            <form method="post" action="{% url 'home' %}" target="hiddenFrame">
-                                {% csrf_token %}
-                                <input type="hidden" name="pk_prod" value="{{ product.id }}">
-                                <input type="hidden" name="pk_subs" value="{{ substitute.id }}">
-                                <button type="submit"><img src="{% static 'img/save.jpg' %} " style="width: 20px"></button>
-                                <style type="text/css">
-                                    button {
-                                        background: transparent;
-                                        border: none !important;
-                                        font-size:0;
-                                    }
-                                </style>
-                            </form>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </header>
+            {% else %}
+                <a href="{% url 'my_product' product.id %}" class="text-center">
+                    <p>
+                        <img src="{{ product.image }}" height="300" width="300">
+                        {{ product }}
+                    </p>
+                </a>
+                {% load multifor %}
+                <div style="background-color: #DE9440;">
+                {% for substitute in substitutes %}
+                    <div id="find_substitute" style="float: left;width: 360px; margin-left: 40px;">
+                        <a href="{% url 'my_product' substitute.id %}">
+                            <img src="{{ substitute.image }}" height="300" width="300" style="z-index: 1;position: relative;">
+                            <div style="float: right; margin-right: 74%;font-size: 30px">{{ substitute.nutriscore_grade }}</div>
+                        </a>
+                        <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+                        <form method="post" action="{% url 'home' %}" target="hiddenFrame">
+                            {% csrf_token %}
+                            <input type="hidden" name="pk_prod" value="{{ product.id }}">
+                            <input type="hidden" name="pk_subs" value="{{ substitute.id }}">
+                            <button type="submit"><img src="{% static 'img/save.jpg' %} " style="width: 20px"></button>
+                            <style type="text/css">
+                                button {
+                                    background: transparent;
+                                    border: none !important;
+                                    font-size:0;
+                                }
+                            </style>
+                        </form>
+                    </div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        </section>
 {% endblock %}

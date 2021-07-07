@@ -27,7 +27,7 @@ class Product(models.Model):
     '''Product model init with fiels'''
     name = models.CharField(max_length=400, unique=False)
     brands = models.CharField(max_length=400)
-    nutriscore_grade = models.CharField(max_length=10)
+    nutriscore_grade = models.CharField(max_length=10, null=True)
     url = models.URLField()
     image = models.URLField()
     stores = models.CharField(max_length=400, null=True)
@@ -40,10 +40,10 @@ class Product(models.Model):
 
 class Favorite(models.Model):
     '''Favorite model init with fiels'''
-    product = models.OneToOneField(Product,
+    product = models.ForeignKey(Product,
                                    on_delete=models.PROTECT,
                                    related_name='product')
-    substitute = models.OneToOneField(Product,
+    substitute = models.ForeignKey(Product,
                                       on_delete=models.PROTECT,
                                       related_name='substitute')
 

@@ -3,7 +3,7 @@
 
 from django.core.management.base import BaseCommand
 
-from .mes_aliments.data import PsqlData
+from ...data import PsqlData
 
 
 class Command(BaseCommand):
