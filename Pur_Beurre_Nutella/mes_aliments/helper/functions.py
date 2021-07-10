@@ -10,3 +10,4 @@ def parse_request(info):
             parsed_letter.append(letter)
     parsed_info = ''.join(parsed_letter)
     return parsed_info
+    
