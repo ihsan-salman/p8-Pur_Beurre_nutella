@@ -20,7 +20,6 @@ class Contact(models.Model):
     '''Contact model init with fiels'''
     email = models.EmailField(max_length=100)
     name = models.CharField(max_length=200)
-    password = models.CharField(max_length=100)
 
 
 class Product(models.Model):
@@ -46,6 +45,7 @@ class Favorite(models.Model):
     substitute = models.ForeignKey(Product,
                                       on_delete=models.PROTECT,
                                       related_name='substitute')
+    username = models.CharField(max_length=100)
 
     def __str__(self):
         return str(self.product)

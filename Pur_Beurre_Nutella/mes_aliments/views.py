@@ -23,9 +23,11 @@ def index(request):
         favorite_registered = Favorite.objects.filter(
             product_id=product_id, substitute_id=substitute_id)
         if not favorite_registered.exists():
+            username = request.user.username
             favorite = Favorite.objects.create(
                 product_id=product_id,
-                substitute_id=substitute_id)
+                substitute_id=substitute_id,
+                username=username)
             favorite.save()
     return HttpResponse(template.render(request=request))
 
@@ -111,7 +113,9 @@ def create(request):
                     email=email,
                     password=password
                 )
+                contact = Contact.objects.create(email=email, name=name)
                 user.save()
+                contact.save()
             else:
                 contact = contact.first()
 

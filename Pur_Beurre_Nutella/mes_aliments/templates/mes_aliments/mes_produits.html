@@ -4,7 +4,7 @@
 
 {% load static %}
 	<!-- subsitute-->
-        <section style="background-color: #DE9440; margin-top: 100px;">
+        <section id="top_product">
             {% if products|length_is:"0" %}
                     Palsambleu ! Nous n'avons trouvé aucun résultat à cette requête. Même pas de quoi se ronger la chique !
                     Partez de nouveau à l'abordage !
@@ -12,35 +12,49 @@
             {% else %}
                 <a href="{% url 'my_product' product.id %}" class="text-center">
                     <p>
-                        <img src="{{ product.image }}" height="300" width="300">
+                        <img src="{{ product.image }}"height="300" width="300">
                         {{ product }}
                     </p>
                 </a>
                 {% load multifor %}
-                <div style="background-color: #DE9440; width: 1080px;">
                     {% for substitute in substitutes %}
-                        <div id="find_substitute" style="float: left;margin-left: 40px;">
+                        <div id="find_substitute">
                             <a href="{% url 'my_product' substitute.id %}">
-                                <img src="{{ substitute.image }}" height="300" width="300" style="z-index: 1;position: relative;">
+                                <img src="{{ substitute.image }}" height="300" width="300" style="z-index: 1;">
                                 <div style="float: right; margin-right: 74%;font-size: 30px">{{ substitute.nutriscore_grade }}</div>
                             </a>
-                            <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
-                            <form method="post" action="{% url 'home' %}" target="hiddenFrame">
+                            <form method="post" action="{% url 'home' %}" onsubmit="return false;">
                                 {% csrf_token %}
                                 <input type="hidden" name="pk_prod" value="{{ product.id }}">
                                 <input type="hidden" name="pk_subs" value="{{ substitute.id }}">
-                                <button type="submit"><img src="{% static 'img/save.jpg' %} " style="width: 20px"></button>
+                                <button id="submt_button" type="submit"><img src="{% static 'img/save.jpg' %}" id="save" ></button>
                                 <style type="text/css">
-                                    button {
+                                    #submit_button {
                                         background: transparent;
                                         border: none !important;
                                         font-size:0;
+                                        height: 0px;
+                                        width: 0px;
+                                        width: 20px
+                                    }
+
+                                    #top_product{
+                                        background-color: #DE9440;
+                                        margin-top: 100px;"
+                                    }
+                                    #find_substitute{
+                                        float: left;
+                                        margin-left: 40px;
+                                    }
+                                    #save{
+                                        height: 15px;
+                                        width: 15px;
                                     }
                                 </style>
                             </form>
                         </div>
                     {% endfor %}
-                </div>
             {% endif %}
         </section>
+        {{username}}
 {% endblock %}
