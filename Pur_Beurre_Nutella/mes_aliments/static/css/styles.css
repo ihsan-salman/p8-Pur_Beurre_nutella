@@ -11036,6 +11036,7 @@ p{
 .float_left{
   float: left;
 }
-#footer_div{
-  
+#favorites{
+  background-color: #DE9440;
+  margin-top: 100px;
 }

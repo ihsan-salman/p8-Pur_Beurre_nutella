@@ -24,8 +24,9 @@ from mes_aliments import views
 
 urlpatterns = [
     url(r'^$', views.index, name='home'),
-    url(r'^mes_produits/', views.product, name='mes_produits'),
+    url(r'^mes_substituts/', views.product, name='find_substitute'),
     url(r'^mon_compte/', views.my_account, name='mon_compte'),
+    url(r'^mes_favoris/', views.my_favorite, name='my_favorite'),
     url(r'^mon_produit/(?P<pk>\d+)/$', views.detail_product,
         name='my_product'),
     url(r'^create/', views.create, name='create'),

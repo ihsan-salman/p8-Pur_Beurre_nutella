@@ -94,6 +94,23 @@ def detail_product(request, pk):
                'product_url': parsed_url}
     return HttpResponse(template.render(context, request=request))
 
+def my_favorite(request):
+    '''return the template of the favorites'''
+    favorite_product = []
+    favorite_substitute = []
+    template = loader.get_template('mes_aliments/mes_favoris.html')
+    if request.method == 'GET':
+        favorites = Favorite.objects.filter(username=request.user.username)
+        for favorite in favorites:
+            product = Product.objects.filter(id=favorite.product_id)
+            favorite_product.append(product[0])
+            substitute = Product.objects.filter(id=favorite.substitute_id)
+            favorite_substitute.append(substitute[0])
+    print(favorite_product, favorite_substitute)
+    context = {'favorite_product': favorite_product,
+               'favorite_substitute': favorite_substitute}
+    return HttpResponse(template.render(context, request=request))
+
 
 def create(request):
     '''return the template to create an user account
