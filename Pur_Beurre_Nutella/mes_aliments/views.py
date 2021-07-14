@@ -106,7 +106,6 @@ def my_favorite(request):
             favorite_product.append(product[0])
             substitute = Product.objects.filter(id=favorite.substitute_id)
             favorite_substitute.append(substitute[0])
-    print(favorite_product, favorite_substitute)
     context = {'favorite_product': favorite_product,
                'favorite_substitute': favorite_substitute}
     return HttpResponse(template.render(context, request=request))

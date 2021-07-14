@@ -8,10 +8,11 @@
       {% else %}
             {% load multifor %}
                 {% for product in favorite_product; substitute in favorite_substitute %}
-                    <p>{{ product }},{{ substitute }}</p>
-
+                    <div id="liste">
+                        <a href="{% url 'my_product' product.id %}"><img src="{{ product.image }}"height="300" width="300"></a>
+                        <a href="{% url 'my_product' substitute.id %}"><img src="{{ substitute.image }}"height="300" width="300"></a>
+                    </div>
                 {% endfor %}
       {% endif %}
     </div>
-        
 {% endblock %}

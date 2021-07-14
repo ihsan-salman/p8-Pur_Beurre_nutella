@@ -23,7 +23,7 @@
                                 <img src="{{ substitute.image }}" height="300" width="300" style="z-index: 1;">
                                 <div style="float: right; margin-right: 74%;font-size: 30px">{{ substitute.nutriscore_grade }}</div>
                             </a>
-                            <form method="post" action="{% url 'home' %}" onsubmit="">
+                            <form method="post" action="{% url 'home' %}" >
                                 {% csrf_token %}
                                 <input type="hidden" name="pk_prod" value="{{ product.id }}">
                                 <input type="hidden" name="pk_subs" value="{{ substitute.id }}">
