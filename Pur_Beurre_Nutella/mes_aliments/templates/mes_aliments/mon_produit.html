@@ -1,46 +1,27 @@
 {% extends 'mes_aliments/base.html' %}
 
 {% block content %}
-	<!-- Masthead-->
-        <header id="masthead">
-            <div class="container px-4 px-lg-5 h-50" style="margin-top: 100px">
-                {% load multifor %}
-                {% for data in product; img in image_url %}
-                    <div class="text-center" id="product_detail">
-                        <style type="text/css">
-                        #product_detail
-                        {
-                            background-image: url('{{img}}');
-                            height: 400px;
-                            width: 32%;
-                            color: black;
-                            margin-left: 30%;
-                        }
-                        #product_name
-                        {   
-                            border: solid;
-                            border-color: black;
-                            border-radius: 20px;
-                            color: white;
-                            background-color: black;
-                            margin-top: 30px;
-                        }
-                        </style>
-                        <div id="product_name"><h2>{{ data }}</h2></div>
-                    </div>
-                    <div style="margin-top: 50px">
-                        <div style="float: left;margin-left: 20%">
-                            <p style="font-size: 25px;">Nutriscore</p>
-                            {{ nutriscore }}
-                        </div>
-                        <p style="margin-left: 70%;margin-top: 10px;font-size: 25px;">
-                            Repères nutritionnels pour 100 g
-                        </p>
-                    </div>
-                    <div style="margin-top: 40px" class="text-center">
-                        <a href="{{ product_url }}" target="_blank" style="border: 3px solid;padding-top: 4px;padding-right: 7px;padding-left: 7px;float: left;margin-left: 20%;">Voir la fiche d'OpenFoodFacts</a>
-                    </div>
-                {% endfor %}
+	<div id="orange_top">
+        {% load multifor %}
+        {% for data in product; img in image_url %}
+            <div class="text-center" id="product_detail">
+                <style type="text/css">
+                #product_detail{background-image: url('{{img}}');}
+                </style>
+                <div id="product_name"><h2>{{ data }}</h2></div>
             </div>
-        </header>
+            <div>
+                <div style="float: left;margin-left: 20%">
+                    <p style="font-size: 25px;">Nutriscore</p>
+                    {{ nutriscore }}
+                </div>
+                <p style="margin-left: 70%;font-size: 25px;">
+                    Repères nutritionnels pour 100 g
+                </p>
+            </div>
+            <div  class="text-center">
+                <a href="{{ product_url }}" target="_blank" style="border: 3px solid;padding-top: 4px;padding-right: 7px;padding-left: 7px;float: left;margin-left: 20%;">Voir la fiche d'OpenFoodFacts</a>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

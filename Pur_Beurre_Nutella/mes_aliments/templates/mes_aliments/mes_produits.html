@@ -28,30 +28,6 @@
                                 <input type="hidden" name="pk_prod" value="{{ product.id }}">
                                 <input type="hidden" name="pk_subs" value="{{ substitute.id }}">
                                 <button id="submt_button" type="submit"><img src="{% static 'img/save.jpg' %}" id="save" ></button>
-                                <style type="text/css">
-                                    #submit_button {
-                                        font-size:0;
-                                        height: 0px;
-                                        width: 0px;
-                                        width: 20px;
-                                        background: none;
-                                        border: none;
-                                        cursor: pointer;
-                                    }
-
-                                    #top_product{
-                                        background-color: #DE9440;
-                                        margin-top: 100px;"
-                                    }
-                                    #find_substitute{
-                                        float: left;
-                                        margin-left: 40px;
-                                    }
-                                    #save{
-                                        height: 15px;
-                                        width: 15px;
-                                    }
-                                </style>
                             </form>
                         </div>
                     {% endfor %}
