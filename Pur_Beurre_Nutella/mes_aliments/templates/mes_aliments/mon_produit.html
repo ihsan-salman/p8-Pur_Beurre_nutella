@@ -1,27 +1,38 @@
 {% extends 'mes_aliments/base.html' %}
 
 {% block content %}
-	<div id="orange_top">
-        {% load multifor %}
-        {% for data in product; img in image_url %}
-            <div class="text-center" id="product_detail">
-                <style type="text/css">
-                #product_detail{background-image: url('{{img}}');}
-                </style>
-                <div id="product_name"><h2>{{ data }}</h2></div>
+	<div id="orange_top_product">
+        <div class="text-center" id="product_detail">
+            <style type="text/css">
+            #product_detail{background-image: url('{{product.image}}');}
+            </style>
+            <div id="product_name"><h2>{{ product }}</h2></div>
+        </div>
+        <div class="margtop_20px">
+            <div id="product_info">
+                <p id="nutri_title">Nutriscore</p>
+                {% if product.nutriscore_grade == "a" %}
+                    <div>
+                        <p id="nutriscore">{{ product.nutriscore_grade }}</p> b c d e
+                    </div>
+                {% endif %}
+                {% if product.nutriscore_grade == "b" %}
+                    <p class="inline">a <p id="nutriscore">{{ product.nutriscore_grade }}</p> c d e</p>
+                {% endif %}
+                {% if product.nutriscore_grade == "c" %}
+                    <p class="inline">a b <p id="nutriscore">{{ product.nutriscore_grade }}</p> d e</p>
+                {% endif %}
+                {% if product.nutriscore_grade == "d" %}
+                    <p class="inline">a b c <p id="nutriscore">{{ product.nutriscore_grade }}</p> e</p>
+                {% endif %}
+                {% if product.nutriscore_grade == "e" %}
+                    <p class="inline">a b c d <p id="nutriscore">{{ product.nutriscore_grade }}</p></p>
+                {% endif %}
             </div>
-            <div>
-                <div style="float: left;margin-left: 20%">
-                    <p style="font-size: 25px;">Nutriscore</p>
-                    {{ nutriscore }}
-                </div>
-                <p style="margin-left: 70%;font-size: 25px;">
-                    Repères nutritionnels pour 100 g
-                </p>
-            </div>
-            <div  class="text-center">
-                <a href="{{ product_url }}" target="_blank" style="border: 3px solid;padding-top: 4px;padding-right: 7px;padding-left: 7px;float: left;margin-left: 20%;">Voir la fiche d'OpenFoodFacts</a>
-            </div>
-        {% endfor %}
+            <p id="nutri_info">
+                Repères nutritionnels pour 100 g
+            </p>
+        </div>
+        <a href="{{ product.url }}" target="_blank" id="product_url">Voir la fiche d'OpenFoodFacts</a>
     </div>
 {% endblock %}

@@ -79,19 +79,10 @@ def product(request):
 
 def detail_product(request, pk):
     '''get the pk of the product and return the detail of the product'''
-    product_image = []
     template = loader.get_template('mes_aliments/mon_produit.html')
     if request.method == 'GET':
         product_search = Product.objects.filter(id=pk)
-    for data in product_search:
-        parsed_image_data = parse_request(data.image)
-        product_image.append(parsed_image_data)
-        parsed_nutriscore_data = parse_request(data.nutriscore_grade)
-        parsed_url = parse_request(data.url)
-    context = {'product': product_search,
-               'image_url': product_image,
-               'nutriscore': parsed_nutriscore_data,
-               'product_url': parsed_url}
+    context = {'product': product_search[0]}
     return HttpResponse(template.render(context, request=request))
 
 def my_favorite(request):

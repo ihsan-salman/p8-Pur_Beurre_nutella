@@ -3,7 +3,7 @@
 {% block content %}
     {% load static %}
     {% load multifor %}
-		<!-- my_favorite-->
+	<!-- my_favorite-->
     <div id="orange_top">
       {% if favorite_product|length_is:"0" %}
         <p>Votre liste de Favoris est nulle! Veuillez enregistrer des produits dans la base de données pour afficher cette liste.</p>
@@ -11,8 +11,20 @@
             {% load multifor %}
                 {% for product in favorite_product; substitute in favorite_substitute %}
                     <div id="liste">
-                        <a href="{% url 'my_product' product.id %}"><img src="{{ product.image }}"height="300" width="300"></a>
-                        <a href="{% url 'my_product' substitute.id %}"><img src="{{ substitute.image }}"height="300" width="300"></a>
+                        <div id="prod_fav">
+                            <a href="{% url 'my_product' product.id %}">
+                                <img src="{{ product.image }}"height="300" width="300">
+                            </a>
+                        </div>
+                        <div id="subs_fav">
+                            <a href="{% url 'my_product' substitute.id %}">
+                                <img src="{{ substitute.image }}"height="300" width="300">
+                            </a>
+                        </div>
+                        <div id="nutri_vs">
+                            {{product.nutriscore_grade}} vs {{substitute.nutriscore_grade}}
+                        </div>
+                        <hr>
                     </div>
                 {% endfor %}
       {% endif %}

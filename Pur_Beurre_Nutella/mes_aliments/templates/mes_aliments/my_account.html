@@ -1,29 +1,18 @@
 {% extends 'mes_aliments/base.html' %}
 
 {% block content %}
-	<!-- Masthead-->
     {% load static %}
-        <header id="masthead">
-            <div class="container px-4 px-lg-5 h-50" style="margin-top: 100px">
+        <div id="orange_top">
                 <div id="account_font">
                     <h2 id="h2">{{user.username}}</h2>
                 </div>
-                {{user.email}}
-            </div>
-        </header>
+                <div id="user_mail">
+                    {{user.email}}
+                </div>
+        </div>
         <style type="text/css">
             #account_font{
                 background-image: url("{% static 'img/account_font_image.png' %}");
-                width: 960px;
-                height: 540px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            #h2{
-                background-color: gray;
-                width: 20%;
-                text-align: center;
-                margin-left: 30%;
             }
         </style>
 {% endblock %}
