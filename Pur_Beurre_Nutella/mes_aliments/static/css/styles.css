@@ -11057,10 +11057,6 @@ p{
   background-color: #DE9440;
   margin-top: 100px;
 }
-#find_substitute{
-  float: left;
-  margin-left: 40px;
-}
 #save{
   height: 15px;
   width: 15px;
@@ -11119,8 +11115,8 @@ p{
   margin-top: 20px;
 }
 #account_font{
-    width: 960px;
-    height: 540px;
+    width: 720px;
+    height: 405px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -11159,4 +11155,9 @@ p{
   padding-right: 5px;
   padding-left: 10px;
   width: 5%;
+}
+#substitute{
+  display: inline-flex;
+  width: 400px;
+  margin-left: 50px;
 }

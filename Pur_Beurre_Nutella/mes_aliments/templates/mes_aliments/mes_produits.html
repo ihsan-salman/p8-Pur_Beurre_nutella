@@ -3,35 +3,36 @@
 {% block content %}
 
 {% load static %}
+{% load multifor %}
 	<!-- subsitute-->
-        <section id="top_product">
-            {% if products|length_is:"0" %}
+    <div id="orange_top">
+        {% if products|length_is:"0" %}
                     Palsambleu ! Nous n'avons trouvé aucun résultat à cette requête. Même pas de quoi se ronger la chique !
                     Partez de nouveau à l'abordage !
-
-            {% else %}
-                <a href="{% url 'my_product' product.id %}" class="text-center">
-                    <p>
-                        <img src="{{ product.image }}"height="300" width="300">
-                        {{ product }}
-                    </p>
-                </a>
-                {% load multifor %}
-                    {% for substitute in substitutes %}
-                        <div id="find_substitute">
-                            <a href="{% url 'my_product' substitute.id %}">
-                                <img src="{{ substitute.image }}" height="300" width="300" style="z-index: 1;">
-                                <div style="float: right; margin-right: 74%;font-size: 30px">{{ substitute.nutriscore_grade }}</div>
-                            </a>
-                            <form method="post" action="{% url 'home' %}" >
-                                {% csrf_token %}
-                                <input type="hidden" name="pk_prod" value="{{ product.id }}">
-                                <input type="hidden" name="pk_subs" value="{{ substitute.id }}">
-                                <button id="submt_button" type="submit"><img src="{% static 'img/save.jpg' %}" id="save" ></button>
-                            </form>
-                        </div>
-                    {% endfor %}
-            {% endif %}
-        </section>
-        {{username}}
+        {% else %}
+            <a href="{% url 'my_product' product.id %}" class="text-center">
+                <p>
+                    <img src="{{ product.image }}"height="300" width="300">
+                    {{ product }}
+                </p>
+            </a>
+            <hr>
+            <div id="orange_top">
+                {% for substitute in substitutes %}
+                    <div id="substitute">
+                        <a href="{% url 'my_product' substitute.id %}">
+                            <img src="{{ substitute.image }}" height="300" width="300" style="z-index: 1;">
+                            <div style="float: right; margin-right: 74%;font-size: 30px">{{ substitute.nutriscore_grade }}</div>
+                        </a>
+                        <form id="save_form">
+                            {% csrf_token %}
+                            <input type="hidden" name="pk_prod" value="{{ product.id }}">
+                            <input type="hidden" name="pk_subs" value="{{ substitute.id }}">
+                            <button id="submt_button" type="submit"><img src="{% static 'img/save.jpg' %}" id="save" ></button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -140,3 +140,9 @@ def my_account(request):
     '''return the template of user's personal informations'''
     template = loader.get_template('mes_aliments/my_account.html')
     return HttpResponse(template.render(request=request))
+
+def page_not_found(request, exception):
+    return render(request, 'error_page/404.html', status=404)
+
+def server_error(request):
+    return render(request, 'error_page/500.html', status=500)

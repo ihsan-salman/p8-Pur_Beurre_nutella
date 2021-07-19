@@ -22,6 +22,10 @@ from django.contrib.auth.views import LogoutView
 
 from mes_aliments import views
 
+
+handler404 = 'mes_aliments.views.page_not_found'
+hander500 = 'mes_aliments.views.server_error'
+
 urlpatterns = [
     url(r'^$', views.index, name='home'),
     url(r'^mes_substituts/', views.product, name='find_substitute'),
