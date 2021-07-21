@@ -58,26 +58,14 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
-// init the button for the click function
-let save_button = document.getElementById('submit_button')
+$(document).on('submit', "#save_form", function (event){
+    event.preventDefault();
+    var save_form = $("#save_form");
 
-// click event to recover the value of the input text
-save_button.addEventListener("click", (event) =>{
-
-  // make sure that the event doesn't return to another url
-  event.preventDefault();
-  // init two html id
-  //let text_input = document.getElementById('text_input');
-  //let discussion = document.getElementById('discussion');
-  console.log('gngn')
-  // send and recover data function into flask
-  fetch('/') //'/ask?question='+text_input.value
-    // return the user's request
-    .then(function(response){
-      return response.json();
+    $.ajax({
+        url: "{% url 'home' %}",
+        type: "POST",
+        data: save_form.serialize(),
     })
-    // recover the sorted data
-    .then(function(data){
-    });
 })
 

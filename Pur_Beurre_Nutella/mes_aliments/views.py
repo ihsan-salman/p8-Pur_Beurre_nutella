@@ -20,6 +20,7 @@ def index(request):
     if request.method == 'POST':
         product_id = request.POST.get('pk_prod')
         substitute_id = request.POST.get('pk_subs')
+        print(product_id, substitute_id)
         favorite_registered = Favorite.objects.filter(
             product_id=product_id, substitute_id=substitute_id)
         if not favorite_registered.exists():
