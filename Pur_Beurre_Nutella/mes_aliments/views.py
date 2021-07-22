@@ -40,8 +40,14 @@ def product(request):
     template = loader.get_template('mes_aliments/mes_produits.html')
     if request.method == 'POST':
         search_request = request.POST.get('request_search')
+        if search_request == '':
+            return render(request, 'error_page/404.html', status=404)
         product_search = Product.objects.filter(
             name__icontains=search_request)
+    if product_search == '':
+        print('ihsan')
+    else:
+        print('gngn')
     my_product = product_search[0]
     my_product_nutriscore = my_product.nutriscore_grade
     if my_product_nutriscore == 'e':

@@ -58,14 +58,3 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
-$(document).on('submit', "#save_form", function (event){
-    event.preventDefault();
-    var save_form = $("#save_form");
-
-    $.ajax({
-        url: "{% url 'home' %}",
-        type: "POST",
-        data: save_form.serialize(),
-    })
-})
-
