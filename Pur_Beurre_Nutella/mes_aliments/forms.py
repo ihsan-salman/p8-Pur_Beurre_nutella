@@ -7,6 +7,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.backends import ModelBackend, UserModel
 from django.db.models import Q
+from django.contrib.auth.forms import AuthenticationForm, UsernameField
+
 
 class RegisterForm(UserCreationForm):
     '''Register form class'''
@@ -38,3 +40,9 @@ class EmailBackend(ModelBackend):
 
         return user if self.user_can_authenticate(user) else None
 
+
+class CustomAuthenticationForm(AuthenticationForm):
+    username = UsernameField(
+        label='Email',
+        widget=forms.TextInput(attrs={'autofocus': True})
+    )

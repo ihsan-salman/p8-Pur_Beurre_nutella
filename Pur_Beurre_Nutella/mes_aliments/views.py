@@ -7,11 +7,12 @@ from django.shortcuts import render, redirect  # , get_object_or_404
 from django.template import loader
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
-# from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .helper.functions import parse_request
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 
 from .models import Category, Product, Favorite, Contact
-from .forms import RegisterForm
+from .forms import RegisterForm, CustomAuthenticationForm
 
 
 def index(request):
@@ -92,6 +93,7 @@ def detail_product(request, pk):
     context = {'product': product_search[0]}
     return HttpResponse(template.render(context, request=request))
 
+@login_required(login_url='/login/')
 def my_favorite(request):
     '''return the template of the favorites'''
     favorite_product = []
@@ -109,6 +111,7 @@ def my_favorite(request):
     return HttpResponse(template.render(context, request=request))
 
 
+@login_required(login_url='/login/')
 def create(request):
     '''return the template to create an user account
        and add in the database all related information'''
@@ -143,13 +146,23 @@ def create(request):
     return render(request, 'registration/create.html', {'form': form})
 
 
+@login_required(login_url='/login/')
 def my_account(request):
     '''return the template of user's personal informations'''
     template = loader.get_template('mes_aliments/my_account.html')
     return HttpResponse(template.render(request=request))
 
+
+class CustomLoginView(LoginView):
+    '''Custimize the login view to change 
+       the default username label to email'''
+    authentication_form = CustomAuthenticationForm
+
+
 def page_not_found(request, exception):
+    '''return the 404 error page'''
     return render(request, 'error_page/404.html', status=404)
 
 def server_error(request):
+    '''return the 500 error page'''
     return render(request, 'error_page/500.html', status=500)

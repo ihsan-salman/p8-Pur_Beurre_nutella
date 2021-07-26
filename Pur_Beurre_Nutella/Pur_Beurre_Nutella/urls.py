@@ -34,8 +34,7 @@ urlpatterns = [
     url(r'^mon_produit/(?P<pk>\d+)/$', views.detail_product,
         name='my_product'),
     url(r'^create/', views.create, name='create'),
-    path('login/', auth_views.LoginView.as_view(
-        template_name='registration/login.html'), name='login'),
+    path('login/', views.CustomLoginView.as_view(), name='login'),
     url(r'^logout/$', LogoutView.as_view(), {'next_page':
         settings.LOGOUT_REDIRECT_URL}, name='logout'),
     path('admin/', admin.site.urls),
