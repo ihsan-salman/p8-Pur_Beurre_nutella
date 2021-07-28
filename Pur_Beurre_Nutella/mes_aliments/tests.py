@@ -23,14 +23,26 @@ class ProductPageTestCase(TestCase):
     def setUp(self):
         '''Init all needed data for the test
            In that case, create new products is necessary'''
-        pizza = Category.objects.create(name="pizza")
-        boisson = Category.objects.create(name="boisson")
+        self.category_name = ['pizza', 'boisson']
+        self.pizza_name = ['pizza1', 'pizza2', 'pizza3']
+        self.pizza_nutriscore = ['c', 'b', 'd']
+        for name in self.category_name:
+            self.category = Category.objects.create(name=name)
+        for name, nutriscore in zip(self.pizza_name, self.pizza_nutriscore): 
+            self.pizza = Product.objects.create(
+                name=name, brands='marque', nutriscore_grade=nutriscore,
+                url='url', image='image', stores='magasin', category_id=1)
+        self.boisson1 = Product.objects.create(
+            name='boisson1', brands='marque', nutriscore_grade='b',
+            url='url', image='image', stores='magasin', category_id=2)
+        print(Product.objects.all())
     def test_product_page_returns_200(self):
         '''Test if the Http request returns 200
            and all substitute with a best nutriscore
            for the selected product '''
-        pass
-
+        selected_product_name = 'pizza1'
+        product_selected = Product.objects.filter(
+            name__icontains=selected_product_name)
 
 class LoginPageTestCase(TestCase):
     '''Login page test class'''
