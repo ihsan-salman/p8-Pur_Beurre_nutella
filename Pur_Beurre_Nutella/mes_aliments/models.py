@@ -40,11 +40,11 @@ class Product(models.Model):
 class Favorite(models.Model):
     '''Favorite model init with fiels'''
     product = models.ForeignKey(Product,
-                                   on_delete=models.PROTECT,
-                                   related_name='product')
+                                on_delete=models.PROTECT,
+                                related_name='product')
     substitute = models.ForeignKey(Product,
-                                      on_delete=models.PROTECT,
-                                      related_name='substitute')
+                                   on_delete=models.PROTECT,
+                                   related_name='substitute')
     username = models.CharField(max_length=100)
 
     def __str__(self):

@@ -21,9 +21,11 @@ class RegisterForm(UserCreationForm):
 
 
 class EmailBackend(ModelBackend):
+    '''change username authentification to email'''
     def authenticate(self, request, username=None, password=None, **kwargs):
-        try: #to allow authentication through phone number or any other field, modify the below statement
-            user = UserModel.objects.get(Q(username__iexact=username) | Q(email__iexact=username))
+        try:
+            user = UserModel.objects.get(Q(username__iexact=username) |
+                                         Q(email__iexact=username))
         except UserModel.DoesNotExist:
             UserModel().set_password(password)
         except MultipleObjectsReturned:
@@ -34,7 +36,7 @@ class EmailBackend(ModelBackend):
 
     def get_user(self, user_id):
         try:
-            user = UserModel.objects.get(pk=user_id)
+            user = UserModel.objectsé.get(pk=user_id)
         except UserModel.DoesNotExist:
             return None
 
@@ -42,6 +44,7 @@ class EmailBackend(ModelBackend):
 
 
 class CustomAuthenticationForm(AuthenticationForm):
+    '''change username label in login form to email label'''
     username = UsernameField(
         label='Email',
         widget=forms.TextInput(attrs={'autofocus': True})

@@ -7,11 +7,10 @@ from django.shortcuts import render, redirect  # , get_object_or_404
 from django.template import loader
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
-from .helper.functions import parse_request
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 
-from .models import Category, Product, Favorite, Contact
+from .models import Product, Favorite, Contact
 from .forms import RegisterForm, CustomAuthenticationForm
 
 
@@ -36,8 +35,6 @@ def index(request):
 
 def product(request):
     '''get the user's query and return the related product'''
-    substitutes_image = []
-    substitutes_nutriscore = []
     template = loader.get_template('mes_aliments/mes_produits.html')
     if request.method == 'POST':
         search_request = request.POST.get('request_search')
@@ -45,10 +42,6 @@ def product(request):
             return render(request, 'error_page/404.html', status=404)
         product_search = Product.objects.filter(
             name__icontains=search_request)
-    if product_search == '':
-        print('ihsan')
-    else:
-        print('gngn')
     my_product = product_search[0]
     my_product_nutriscore = my_product.nutriscore_grade
     if my_product_nutriscore == 'e':
@@ -82,8 +75,9 @@ def product(request):
             category_id=my_product.category_id).exclude(
             id=my_product.id)
     context = {'product': my_product,
-               'substitutes': substitute_search,}
+               'substitutes': substitute_search}
     return HttpResponse(template.render(context, request=request))
+
 
 def detail_product(request, pk):
     '''get the pk of the product and return the detail of the product'''
@@ -92,6 +86,7 @@ def detail_product(request, pk):
         product_search = Product.objects.filter(id=pk)
     context = {'product': product_search[0]}
     return HttpResponse(template.render(context, request=request))
+
 
 @login_required(login_url='/login/')
 def my_favorite(request):
@@ -154,7 +149,7 @@ def my_account(request):
 
 
 class CustomLoginView(LoginView):
-    '''Custimize the login view to change 
+    '''Custimize the login view to change
        the default username label to email'''
     authentication_form = CustomAuthenticationForm
 
@@ -162,6 +157,7 @@ class CustomLoginView(LoginView):
 def page_not_found(request, exception):
     '''return the 404 error page'''
     return render(request, 'error_page/404.html', status=404)
+
 
 def server_error(request):
     '''return the 500 error page'''
