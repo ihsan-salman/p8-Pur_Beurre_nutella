@@ -9,18 +9,20 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Product, Favorite, Contact
+from .helper.function import substitute_search, product_search
 from .forms import RegisterForm, CustomAuthenticationForm
 
 
+@csrf_exempt
 def index(request):
     '''return index template'''
     template = loader.get_template('mes_aliments/index.html')
     if request.method == 'POST':
-        product_id = request.POST.get('pk_prod')
+        product_id = request.POST.get("pk_prod")
         substitute_id = request.POST.get('pk_subs')
-        print(product_id, substitute_id)
         favorite_registered = Favorite.objects.filter(
             product_id=product_id, substitute_id=substitute_id)
         if not favorite_registered.exists():
@@ -33,49 +35,18 @@ def index(request):
     return HttpResponse(template.render(request=request))
 
 
+@csrf_exempt
 def product(request):
     '''get the user's query and return the related product'''
     template = loader.get_template('mes_aliments/mes_produits.html')
     if request.method == 'POST':
         search_request = request.POST.get('request_search')
+        my_product = product_search(search_request)[0]
+        substitutes = substitute_search(search_request)
         if search_request == '':
             return render(request, 'error_page/404.html', status=404)
-        product_search = Product.objects.filter(
-            name__icontains=search_request)
-    my_product = product_search[0]
-    my_product_nutriscore = my_product.nutriscore_grade
-    if my_product_nutriscore == 'e':
-        list_score = ["d", "c", "b", "a"]
-        substitute_search = Product.objects.filter(
-            category_id=my_product.category_id).filter(
-            nutriscore_grade__in=list_score).exclude(
-            id=my_product.id)
-    elif my_product_nutriscore == 'd':
-        list_score = ["c", "b", "a"]
-        substitute_search = Product.objects.filter(
-            nutriscore_grade__in=list_score).filter(
-            category_id=my_product.category_id).exclude(
-            id=my_product.id)
-    elif my_product_nutriscore == 'c':
-        list_score = ["c", "b", "a"]
-        substitute_search = Product.objects.filter(
-            nutriscore_grade__in=list_score).filter(
-            category_id=my_product.category_id).exclude(
-            id=my_product.id)
-    elif my_product_nutriscore == 'b':
-        list_score = ["b", "a"]
-        substitute_search = Product.objects.filter(
-            nutriscore_grade__in=list_score).filter(
-            category_id=my_product.category_id).exclude(
-            id=my_product.id)
-    else:
-        list_score = ["a"]
-        substitute_search = Product.objects.filter(
-            nutriscore_grade__in=list_score).filter(
-            category_id=my_product.category_id).exclude(
-            id=my_product.id)
     context = {'product': my_product,
-               'substitutes': substitute_search}
+               'substitutes': substitutes}
     return HttpResponse(template.render(context, request=request))
 
 

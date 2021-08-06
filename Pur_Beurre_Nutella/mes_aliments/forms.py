@@ -36,7 +36,7 @@ class EmailBackend(ModelBackend):
 
     def get_user(self, user_id):
         try:
-            user = UserModel.objectsé.get(pk=user_id)
+            user = UserModel.objects.get(pk=user_id)
         except UserModel.DoesNotExist:
             return None
 

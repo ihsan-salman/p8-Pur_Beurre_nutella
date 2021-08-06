@@ -16,15 +16,14 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
 from django.urls import path
 from django.contrib.auth.views import LogoutView
 
 from mes_aliments import views
 
 
-handler404 = 'mes_aliments.views.page_not_found'
-hander500 = 'mes_aliments.views.server_error'
+HANDLER404 = 'mes_aliments.views.page_not_found'
+HANDLER500 = 'mes_aliments.views.server_error'
 
 urlpatterns = [
     url(r'^$', views.index, name='home'),

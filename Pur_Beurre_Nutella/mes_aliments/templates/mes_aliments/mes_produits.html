@@ -24,25 +24,22 @@
                             <img src="{{ substitute.image }}" height="300" width="300" style="z-index: 1;">
                             <div style="float: right; margin-right: 74%;font-size: 30px">{{ substitute.nutriscore_grade }}</div>
                         </a>
-                        <form id="save_form">
-                            {% csrf_token %}
-                            <input type="hidden" name="pk_prod" value="{{ product.id }}">
-                            <input type="hidden" name="pk_subs" value="{{ substitute.id }}">
-                            <button id="submt_button" type="submit"><img src="{% static 'img/save.jpg' %}" id="save" ></button>
-                        </form>
+                        <button id="submt_button" type="button" onclick="call({{ product.id }}, {{substitute.id}})"><img src="{% static 'img/save.jpg' %}" id="save" ></button>
                     </div>
                 {% endfor %}
                 <script type="text/javascript">
-                    $(document).on('submit', "#save_form", function (event){
-                        event.preventDefault();
-                        var save_form = $("#save_form");
+                    function call(id_product, id_substitute){
+                        var ihsan = {
+                            "pk_prod": id_product,
+                            "pk_subs": id_substitute
+                        };
 
-                        $.ajax({
+                         $.ajax({
                             url: "{% url 'home' %}",
                             type: "POST",
-                            data: save_form.serialize(),
-                        })
-                    })
+                            data: ihsan
+                        });
+                    }
                 </script>
             </div>
         {% endif %}

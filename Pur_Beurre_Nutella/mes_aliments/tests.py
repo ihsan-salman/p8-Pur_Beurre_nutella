@@ -7,6 +7,35 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 
 from .models import Category, Contact, Product, Favorite
+from .helper.function import substitute_search, product_search
+
+
+class ModelsTestCase(TestCase):
+    '''Models test class'''
+    def setUp(self):
+        '''Init the test with creation of one category and one product'''
+        self.category_name = ['pizza', 'boisson']
+        self.pizza_name = ['pizza1', 'pizza2', 'pizza3']
+        self.pizza_nutriscore = ['c', 'b', 'd']
+        for name in self.category_name:
+            self.category = Category.objects.create(name=name)
+        for name, nutriscore in zip(self.pizza_name, self.pizza_nutriscore):
+            self.pizza = Product.objects.create(
+                name=name, brands='marque', nutriscore_grade=nutriscore,
+                url='url', image='image', stores='magasin', category_id=1)
+        self.boisson1 = Product.objects.create(
+            name='boisson1', brands='marque', nutriscore_grade='b',
+            url='url', image='image', stores='magasin', category_id=2)
+        self.result = "pizza1"
+
+    def test_product_search(self):
+        '''Test the product_search method if returns the correct value'''
+        self.my_product = product_search('pizza1')[0]
+        self.assertEqual(self.my_product.name, self.result)
+
+    def test_substitute_search(self):
+        self.substitutes = substitute_search('pizza3')
+        print(self.substitutes)
 
 
 class IndexPageTestCase(TestCase):
@@ -17,7 +46,7 @@ class IndexPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class ProductPageTestCase(TestCase):
+"""class ProductPageTestCase(TestCase):
     '''Product page test class'''
     def setUp(self):
         '''Init all needed data for the test
@@ -39,43 +68,8 @@ class ProductPageTestCase(TestCase):
         '''Test if the Http request returns 200
            and all substitute with a best nutriscore
            for the selected product '''
-        selected_product_name = 'pizza3'
-        my_product = Product.objects.filter(
-            name__icontains=selected_product_name)[0]
-        my_product_nutriscore = my_product.nutriscore_grade
-        if my_product_nutriscore == 'e':
-            list_score = ["d", "c", "b", "a"]
-            substitute_search = Product.objects.filter(
-                category_id=my_product.category_id).filter(
-                nutriscore_grade__in=list_score).exclude(
-                id=my_product.id)
-        elif my_product_nutriscore == 'd':
-            list_score = ["c", "b", "a"]
-            substitute_search = Product.objects.filter(
-                nutriscore_grade__in=list_score).filter(
-                category_id=my_product.category_id).exclude(
-                id=my_product.id)
-        elif my_product_nutriscore == 'c':
-            list_score = ["c", "b", "a"]
-            substitute_search = Product.objects.filter(
-                nutriscore_grade__in=list_score).filter(
-                category_id=my_product.category_id).exclude(
-                id=my_product.id)
-        elif my_product_nutriscore == 'b':
-            list_score = ["b", "a"]
-            substitute_search = Product.objects.filter(
-                nutriscore_grade__in=list_score).filter(
-                category_id=my_product.category_id).exclude(
-                id=my_product.id)
-        else:
-            list_score = ["a"]
-            substitute_search = Product.objects.filter(
-                nutriscore_grade__in=list_score).filter(
-                category_id=my_product.category_id).exclude(
-                id=my_product.id)
-        print(my_product, substitute_search)
         response = self.client.post('/mes_substituts/')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)"""
 
 
 class LoginPageTestCase(TestCase):
