@@ -31,7 +31,7 @@ class Product(models.Model):
     image = models.URLField()
     stores = models.CharField(max_length=400, null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT,
-                                 default='DEFAULT VALUE')
+                                 null=True, default=None)
 
     def __str__(self):
         return str(self.name)

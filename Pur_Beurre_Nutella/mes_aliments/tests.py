@@ -22,10 +22,14 @@ class ModelsTestCase(TestCase):
         for name, nutriscore in zip(self.pizza_name, self.pizza_nutriscore):
             self.pizza = Product.objects.create(
                 name=name, brands='marque', nutriscore_grade=nutriscore,
-                url='url', image='image', stores='magasin', category_id=1)
+                url='url', image='image', stores='magasin')
+            self.pizza.category = Category.objects.get(name='pizza') 
+            self.pizza.save()
         self.boisson1 = Product.objects.create(
             name='boisson1', brands='marque', nutriscore_grade='b',
-            url='url', image='image', stores='magasin', category_id=2)
+            url='url', image='image', stores='magasin')
+        self.boisson1 = Category.objects.get(name='boisson')
+        self.boisson1.save()
         self.result = "pizza1"
 
     def test_product_search(self):
@@ -35,8 +39,7 @@ class ModelsTestCase(TestCase):
 
     def test_substitute_search(self):
         self.substitutes = substitute_search('pizza3')
-        print(self.substitutes)
-
+        self.assertEqual(self.substitutes, ['pizza1', 'pizza2'])
 
 class IndexPageTestCase(TestCase):
     '''Index page test class'''
