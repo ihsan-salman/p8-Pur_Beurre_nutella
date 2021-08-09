@@ -3,7 +3,7 @@
 
 
 from django.urls import reverse
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.contrib.auth.models import User
 
 from .models import Category, Contact, Product, Favorite
@@ -38,8 +38,10 @@ class ModelsTestCase(TestCase):
         self.assertEqual(self.my_product.name, self.result)
 
     def test_substitute_search(self):
+        '''Test the substitute_search method if returns the correct values'''
         self.substitutes = substitute_search('pizza3')
-        self.assertEqual(self.substitutes, ['pizza1', 'pizza2'])
+        self.assertEqual([self.substitutes[0].name, self.substitutes[1].name],
+                         ['pizza1', 'pizza2'])
 
 class IndexPageTestCase(TestCase):
     '''Index page test class'''
@@ -49,11 +51,11 @@ class IndexPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-"""class ProductPageTestCase(TestCase):
+class ProductPageTestCase(TestCase):
     '''Product page test class'''
     def setUp(self):
-        '''Init all needed data for the test
-           In that case, create new products is necessary'''
+        '''Init the test with creation of one category and one product'''
+        self.client = Client()
         self.category_name = ['pizza', 'boisson']
         self.pizza_name = ['pizza1', 'pizza2', 'pizza3']
         self.pizza_nutriscore = ['c', 'b', 'd']
@@ -62,17 +64,24 @@ class IndexPageTestCase(TestCase):
         for name, nutriscore in zip(self.pizza_name, self.pizza_nutriscore):
             self.pizza = Product.objects.create(
                 name=name, brands='marque', nutriscore_grade=nutriscore,
-                url='url', image='image', stores='magasin', category_id=1)
+                url='url', image='image', stores='magasin')
+            self.pizza.category = Category.objects.get(name='pizza') 
+            self.pizza.save()
         self.boisson1 = Product.objects.create(
             name='boisson1', brands='marque', nutriscore_grade='b',
-            url='url', image='image', stores='magasin', category_id=2)
+            url='url', image='image', stores='magasin')
+        self.boisson1 = Category.objects.get(name='boisson')
+        self.boisson1.save()
 
-    def test_product_page_returns_200(self, *args):
+    def test_product_page_returns_200(self):
         '''Test if the Http request returns 200
            and all substitute with a best nutriscore
            for the selected product '''
-        response = self.client.post('/mes_substituts/')
-        self.assertEqual(response.status_code, 200)"""
+        self.my_product = product_search('pizza3')[0]
+        self.substitutes = substitute_search('pizza3')
+        context = {'product': self.my_product, 'substitutes': self.substitutes}
+        response = self.client.post(reverse('find_substitute'), data=context, follow=True)
+        print(response.status_code)
 
 
 class LoginPageTestCase(TestCase):
