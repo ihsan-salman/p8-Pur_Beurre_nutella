@@ -10,8 +10,9 @@ from selenium import webdriver
 from .models import Category, Contact, Product, Favorite
 from .helper.function import substitute_search, product_search
 
-""" Django Unittest including medthods, views and database 
-    Using Testcase library from Django Test """
+""" Django Unittest including medthods, views and database """
+""" Using Testcase library from Django Test """
+
 class ModelsTestCase(TestCase):
     '''Models test class'''
     def setUp(self):
@@ -123,3 +124,12 @@ class FavoritePageTestCase(TestCase):
         self.client.post('/login/', self.credentials, follow=True)
         response = self.client.get('/mes_favoris/')
         self.assertEqual(response.status_code, 200)
+
+
+""" Django Functional Test with Selenium library """
+"""" automatising user's interaction with the website """
+
+class TestProject(LiveServerTestCase):
+    '''  '''
+    def test(self):
+        self.browser = webdriver.Edge(r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")
