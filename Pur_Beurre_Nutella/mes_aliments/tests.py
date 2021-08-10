@@ -5,6 +5,7 @@
 from django.urls import reverse
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
+from selenium import webdriver
 
 from .models import Category, Contact, Product, Favorite
 from .helper.function import substitute_search, product_search
@@ -51,37 +52,22 @@ class IndexPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
+class LegalMentionPageTestCase(TestCase):
+    '''Legal Mention page test class'''
+    def test_legal_mention_page_returns_200(self):
+        '''Test if the Http request returns 200'''
+        response = self.client.get(reverse('mention_legal'))
+        self.assertEqual(response.status_code, 200)
+
+
 class ProductPageTestCase(TestCase):
     '''Product page test class'''
-    def setUp(self):
-        '''Init the test with creation of one category and one product'''
-        self.client = Client()
-        self.category_name = ['pizza', 'boisson']
-        self.pizza_name = ['pizza1', 'pizza2', 'pizza3']
-        self.pizza_nutriscore = ['c', 'b', 'd']
-        for name in self.category_name:
-            self.category = Category.objects.create(name=name)
-        for name, nutriscore in zip(self.pizza_name, self.pizza_nutriscore):
-            self.pizza = Product.objects.create(
-                name=name, brands='marque', nutriscore_grade=nutriscore,
-                url='url', image='image', stores='magasin')
-            self.pizza.category = Category.objects.get(name='pizza') 
-            self.pizza.save()
-        self.boisson1 = Product.objects.create(
-            name='boisson1', brands='marque', nutriscore_grade='b',
-            url='url', image='image', stores='magasin')
-        self.boisson1 = Category.objects.get(name='boisson')
-        self.boisson1.save()
-
-    def test_product_page_returns_200(self):
-        '''Test if the Http request returns 200
+    def test_product_page_returns_301(self):
+        '''Test if the Http request returns 301
            and all substitute with a best nutriscore
            for the selected product '''
-        self.my_product = product_search('pizza3')[0]
-        self.substitutes = substitute_search('pizza3')
-        context = {'product': self.my_product, 'substitutes': self.substitutes}
-        response = self.client.post(reverse('find_substitute'), data=context, follow=True)
-        print(response.status_code)
+        response = self.client.get('/mes_substituts')
+        self.assertEqual(response.status_code, 301)
 
 
 class LoginPageTestCase(TestCase):
@@ -120,4 +106,19 @@ class AccountPageTestCase(TestCase):
         # send login data
         self.client.post('/login/', self.credentials, follow=True)
         response = self.client.get('/mon_compte/')
+        self.assertEqual(response.status_code, 200)
+
+
+class FavoritePageTestCase(TestCase):
+    '''Favorite page test class'''
+    def setUp(self):
+        '''Init all needed data for the test'''
+        self.credentials = {
+            'username': 'testuser',
+            'password': 'secret'}
+        User.objects.create_user(**self.credentials)
+    def test_favorite_page_returns_200(self):
+        '''Test if the Http request 200 when the user is logged'''
+        self.client.post('/login/', self.credentials, follow=True)
+        response = self.client.get('/mes_favoris/')
         self.assertEqual(response.status_code, 200)

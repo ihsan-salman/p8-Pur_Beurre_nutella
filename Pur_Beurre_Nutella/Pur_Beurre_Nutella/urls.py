@@ -27,6 +27,7 @@ HANDLER500 = 'mes_aliments.views.server_error'
 
 urlpatterns = [
     url(r'^$', views.index, name='home'),
+    url(r'^mention_legal', views.legal_mention, name='mention_legal'),
     url(r'^mes_substituts/', views.product, name='find_substitute'),
     url(r'^mon_compte/', views.my_account, name='mon_compte'),
     url(r'^mes_favoris/', views.my_favorite, name='my_favorite'),

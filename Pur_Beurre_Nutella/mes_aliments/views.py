@@ -59,6 +59,12 @@ def detail_product(request, pk):
     return HttpResponse(template.render(context, request=request))
 
 
+def legal_mention(request):
+    '''return legal mention template'''
+    template = loader.get_template('mes_aliments/mention_legal.html')
+    return HttpResponse(template.render(request=request))
+
+
 @login_required(login_url='/login/')
 def my_favorite(request):
     '''return the template of the favorites'''
