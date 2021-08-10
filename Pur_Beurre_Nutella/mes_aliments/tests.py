@@ -3,14 +3,15 @@
 
 
 from django.urls import reverse
-from django.test import TestCase, Client
+from django.test import TestCase, Client, LiveServerTestCase
 from django.contrib.auth.models import User
 from selenium import webdriver
 
 from .models import Category, Contact, Product, Favorite
 from .helper.function import substitute_search, product_search
 
-
+""" Django Unittest including medthods, views and database 
+    Using Testcase library from Django Test """
 class ModelsTestCase(TestCase):
     '''Models test class'''
     def setUp(self):
