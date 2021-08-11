@@ -2,6 +2,7 @@
    -*- coding: Utf-8 -'''
 
 
+import time
 from django.urls import reverse
 from django.test import TestCase, Client, LiveServerTestCase
 from django.contrib.auth.models import User
@@ -131,5 +132,8 @@ class FavoritePageTestCase(TestCase):
 
 class TestProject(LiveServerTestCase):
     '''  '''
-    def test(self):
-        self.browser = webdriver.Edge(r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")
+    def test_index_page_title(self):
+        self.browser = webdriver.Edge(r"C:\Users\ihsan\Desktop\msedgedriver.exe")
+        self.browser.get('http://127.0.0.1:8000/')
+        self.assertEqual(self.browser.title, 'Pur-Beurre')
+        self.browser.quit()
