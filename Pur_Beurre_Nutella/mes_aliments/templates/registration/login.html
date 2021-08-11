@@ -8,7 +8,7 @@
                     {% csrf_token %}
                         {{form.as_p}}
                     <button type="submit" class="btn btn-success">Entrer</button>
-                    <p>Vous n'avez pas encore de compte ? Créez en un <a href="/create">ici</a></p>
+                    <p>Vous n'avez pas encore de compte ? Créez en un <a href="{% url 'create' %}">ici</a></p>
                 </form>
             </div>
         </header>

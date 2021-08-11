@@ -83,7 +83,6 @@ def my_favorite(request):
     return HttpResponse(template.render(context, request=request))
 
 
-@login_required(login_url='/login/')
 def create(request):
     '''return the template to create an user account
        and add in the database all related information'''
@@ -108,7 +107,7 @@ def create(request):
             else:
                 contact = contact.first()
 
-            return redirect('/')
+            return redirect('/login/')
         else:
             # Form data doesn't match the expected format.
             # Add errors to the template.

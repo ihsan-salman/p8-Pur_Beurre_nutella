@@ -131,9 +131,17 @@ class FavoritePageTestCase(TestCase):
 """" automatising user's interaction with the website """
 
 class TestProject(LiveServerTestCase):
-    '''  '''
-    def test_index_page_title(self):
+    ''' All functional Django Test class '''
+    def setUp(self):
         self.browser = webdriver.Edge(r"C:\Users\ihsan\Desktop\msedgedriver.exe")
-        self.browser.get('http://127.0.0.1:8000/')
+
+    def test_index_page_title(self):
+        ''' Little functional test to make sure about the url page contents '''
+        self.browser.get('http://127.0.0.1:8000/create')
         self.assertEqual(self.browser.title, 'Pur-Beurre')
-        self.browser.quit()
+
+    def test_login(self):
+        ''' Login functional Test '''
+        #self.browser.get('http://127.0.0.1:8000/login/')
+        #self.browser.find_element_by_id("login_field").send_keys("i")
+
