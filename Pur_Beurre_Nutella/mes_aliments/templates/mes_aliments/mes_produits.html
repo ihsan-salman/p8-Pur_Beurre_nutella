@@ -10,10 +10,10 @@
                     Palsambleu ! Nous n'avons trouvé aucun résultat à cette requête. Même pas de quoi se ronger la chique !
                     Partez de nouveau à l'abordage !
         {% else %}
-            <a href="{% url 'my_product' product.id %}" class="text-center">
+            <a href="{% url 'my_product' product.id %}" class="text-center" id="product_detail">
                 <p>
                     <img src="{{ product.image }}"height="300" width="300">
-                    {{ product }}
+                     {{ product }}
                 </p>
             </a>
             <hr>

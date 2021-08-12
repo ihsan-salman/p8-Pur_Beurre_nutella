@@ -2,17 +2,16 @@
    -*- coding: Utf-8 -'''
 
 
-import time
 from django.urls import reverse
-from django.test import TestCase, Client, LiveServerTestCase
+from django.test import TestCase
 from django.contrib.auth.models import User
-from selenium import webdriver
 
-from .models import Category, Contact, Product, Favorite
-from .helper.function import substitute_search, product_search
+from ..models import Category, Product
+from ..helper.function import substitute_search, product_search
 
 """ Django Unittest including medthods, views and database """
 """ Using Testcase library from Django Test """
+
 
 class ModelsTestCase(TestCase):
     '''Models test class'''
@@ -27,7 +26,7 @@ class ModelsTestCase(TestCase):
             self.pizza = Product.objects.create(
                 name=name, brands='marque', nutriscore_grade=nutriscore,
                 url='url', image='image', stores='magasin')
-            self.pizza.category = Category.objects.get(name='pizza') 
+            self.pizza.category = Category.objects.get(name='pizza')
             self.pizza.save()
         self.boisson1 = Product.objects.create(
             name='boisson1', brands='marque', nutriscore_grade='b',
@@ -46,6 +45,7 @@ class ModelsTestCase(TestCase):
         self.substitutes = substitute_search('pizza3')
         self.assertEqual([self.substitutes[0].name, self.substitutes[1].name],
                          ['pizza1', 'pizza2'])
+
 
 class IndexPageTestCase(TestCase):
     '''Index page test class'''
@@ -120,38 +120,9 @@ class FavoritePageTestCase(TestCase):
             'username': 'testuser',
             'password': 'secret'}
         User.objects.create_user(**self.credentials)
+
     def test_favorite_page_returns_200(self):
         '''Test if the Http request 200 when the user is logged'''
         self.client.post('/login/', self.credentials, follow=True)
         response = self.client.get('/mes_favoris/')
         self.assertEqual(response.status_code, 200)
-
-
-""" Django Functional Test with Selenium library """
-"""" automatising user's interaction with the website """
-
-class TestProject(LiveServerTestCase):
-    ''' All functional Django Test class '''
-    def setUp(self):
-        ''' Init all Functional test '''
-        # Path to edge webdriver 
-        self.browser = webdriver.Edge(r"C:\Users\ihsan\Desktop\msedgedriver.exe")
-        self.INDEX_PAGE_URL = 'http://127.0.0.1:8000/'
-        self.LOGIN_PAGE_URL = 'http://127.0.0.1:8000/login'
-
-    def test_index_page_title(self):
-        ''' Little functional test to make sure about the url page contents '''
-        self.browser.get(self.INDEX_PAGE_URL)
-        self.assertEqual(self.browser.title, 'Pur-Beurre')
-        self.browser.quit()
-
-    def test_login(self):
-        ''' Login functional Test '''
-        self.browser.get(self.LOGIN_PAGE_URL)
-        self.browser.find_element_by_id("id_username").send_keys("i")
-        self.browser.find_element_by_id("id_password").send_keys("salman57")
-        self.browser.find_element_by_id("submit_button").click()
-        self.assertEqual(self.browser.current_url, self.INDEX_PAGE_URL)
-        self.browser.quit()
-
-

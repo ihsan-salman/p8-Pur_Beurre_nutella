@@ -11161,3 +11161,12 @@ p{
   width: 400px;
   margin-left: 50px;
 }
+#orange_top_registration{
+  background-color: #DE9440;
+  margin-top: 100px;
+  height: 500px;
+}
+#registration_form{
+  margin-left: 50px;
+  padding-top: 50px;
+}
