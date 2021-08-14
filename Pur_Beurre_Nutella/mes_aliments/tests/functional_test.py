@@ -61,11 +61,13 @@ class TestProject(LiveServerTestCase):
         self.assertEqual(self.browser.current_url, self.LOGIN_PAGE_URL)
         self.browser.quit()
 
-    def test_product_favorite(self):
+    def test_product_detail(self):
         ''' Detail page functionnal test '''
         self.browser.get(self.INDEX_PAGE_URL)
         self.browser.find_element_by_id("text_input").send_keys('pizza')
         self.browser.find_element_by_id("button").click()
         self.browser.get(self.SUBSTITUTE_PAGE_URL)
-        self.browser.find_element_by_id('submt_button').click()
+        link_list = self.browser.find_elements_by_xpath("//a[@href]")
+        for link in link_list:
+            print(link.get_attribute("href"))
 

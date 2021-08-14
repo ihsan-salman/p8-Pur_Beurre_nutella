@@ -20,7 +20,7 @@
             <div id="orange_top">
                 {% for substitute in substitutes %}
                     <div id="substitute">
-                        <a href="{% url 'my_product' substitute.id %}">
+                        <a href="{% url 'my_product' substitute.id %}" id="product_detail">
                             <img src="{{ substitute.image }}" height="300" width="300" style="z-index: 1;">
                             <div style="float: right; margin-right: 74%;font-size: 30px">{{ substitute.nutriscore_grade }}</div>
                         </a>
