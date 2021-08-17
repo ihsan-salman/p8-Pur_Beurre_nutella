@@ -11014,7 +11014,7 @@ header.masthead h1, header.masthead .h1 {
 
 button{
   height: 30px;
-  width: 80px;
+  width: 40px;
   margin-top: 5px;
 }
 #button{
@@ -11169,4 +11169,12 @@ p{
 #registration_form{
   margin-left: 50px;
   padding-top: 50px;
+}
+#substitute_img{
+  z-index: 1;
+}
+#substitute_nutri{
+  float: right;
+  margin-right: 74%;
+  font-size: 30px;
 }

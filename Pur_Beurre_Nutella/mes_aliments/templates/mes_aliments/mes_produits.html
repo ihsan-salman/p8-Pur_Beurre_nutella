@@ -21,8 +21,8 @@
                 {% for substitute in substitutes %}
                     <div id="substitute">
                         <a href="{% url 'my_product' substitute.id %}" id="product_detail">
-                            <img src="{{ substitute.image }}" height="300" width="300" style="z-index: 1;">
-                            <div style="float: right; margin-right: 74%;font-size: 30px">{{ substitute.nutriscore_grade }}</div>
+                            <img src="{{ substitute.image }}" height="300" width="300" id="substitute_img">
+                            <div id="substitute_nutri">{{ substitute.nutriscore_grade }}</div>
                         </a>
                         <button id="submt_button" type="button" onclick="call({{ product.id }}, {{substitute.id}})"><img src="{% static 'img/save.jpg' %}" id="save" ></button>
                     </div>
