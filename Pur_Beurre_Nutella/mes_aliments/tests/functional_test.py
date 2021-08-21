@@ -3,6 +3,7 @@
 
 
 import time
+from django.urls import reverse
 from django.test import LiveServerTestCase
 from selenium import webdriver
 
@@ -63,11 +64,9 @@ class TestProject(LiveServerTestCase):
 
     def test_product_detail(self):
         ''' Detail page functionnal test '''
-        self.browser.get(self.INDEX_PAGE_URL)
+        '''self.browser.get(self.INDEX_PAGE_URL)
         self.browser.find_element_by_id("text_input").send_keys('pizza')
-        self.browser.find_element_by_id("button").click()
-        self.browser.get(self.SUBSTITUTE_PAGE_URL)
-        link_list = self.browser.find_elements_by_xpath("//a[@href]")
-        for link in link_list:
-            print(link.get_attribute("href"))
+        self.browser.find_element_by_id("button").click()'''
+        response = self.client.post(reverse('find_substitute'), {'request_search': 'pizza'})
+        print(response.status_code)
 
