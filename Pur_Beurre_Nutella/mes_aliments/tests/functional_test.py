@@ -23,7 +23,7 @@ class TestProject(LiveServerTestCase):
         self.INDEX_PAGE_URL = 'http://127.0.0.1:8000/'
         self.LOGIN_PAGE_URL = 'http://127.0.0.1:8000/login/'
         self.CREATE_PAGE_URL = 'http://127.0.0.1:8000/create/'
-        self.SUBSTITUTE_PAGE_URL = 'http://127.0.0.1:8000/mes_substituts/'
+        self.PRODUCT_DETAIL_URL = 'http://127.0.0.1:8000/mon_produit/1/'
 
     def test_index_page_title(self):
         ''' Little functional test to make sure about the url page contents '''
@@ -46,6 +46,7 @@ class TestProject(LiveServerTestCase):
             "id_password").send_keys('salman57')
         # Click button event
         self.browser.find_element_by_id("submit_button").click()
+        time.sleep(5)
         self.assertEqual(self.browser.current_url, self.INDEX_PAGE_URL)
         time.sleep(1)
         self.browser.quit()
@@ -58,15 +59,14 @@ class TestProject(LiveServerTestCase):
         self.browser.find_element_by_id("id_password1").send_keys('azeqsd00')
         self.browser.find_element_by_id("id_password2").send_keys('azeqsd00')
         self.browser.find_element_by_id("submit_button").click()
-        time.sleep(1)
         self.assertEqual(self.browser.current_url, self.LOGIN_PAGE_URL)
         self.browser.quit()
 
     def test_product_detail(self):
         ''' Detail page functionnal test '''
-        '''self.browser.get(self.INDEX_PAGE_URL)
+        self.browser.get(self.INDEX_PAGE_URL)
         self.browser.find_element_by_id("text_input").send_keys('pizza')
-        self.browser.find_element_by_id("button").click()'''
-        response = self.client.post(reverse('find_substitute'), {'request_search': 'pizza'})
-        print(response.status_code)
+        self.browser.find_element_by_id("button").click()
+        self.browser.find_element_by_id("product_detail").click()
+        self.assertEqual(self.browser.current_url, self.PRODUCT_DETAIL_URL)
 
