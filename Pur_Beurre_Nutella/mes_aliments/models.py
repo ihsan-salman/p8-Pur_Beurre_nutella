@@ -46,6 +46,3 @@ class Favorite(models.Model):
                                    on_delete=models.PROTECT,
                                    related_name='substitute')
     username = models.CharField(max_length=100)
-
-    def __str__(self):
-        return str(self.product)

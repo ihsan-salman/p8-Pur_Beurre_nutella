@@ -38,7 +38,9 @@ class ModelsTestCase(TestCase):
     def test_product_search(self):
         '''Test the product_search method if returns the correct value'''
         self.my_product = product_search('pizza1')[0]
-        self.assertEqual(self.my_product.name, self.result)
+        self.assertEqual(self.my_product.__str__(), self.result)
+        self.pizza_category = Category.objects.get(name='pizza')
+        self.assertEqual(self.pizza_category.__str__(), 'pizza')
 
     def test_substitute_search(self):
         '''Test the substitute_search method if returns the correct values'''
