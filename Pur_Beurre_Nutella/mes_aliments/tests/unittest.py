@@ -55,6 +55,7 @@ class IndexPageTestCase(TestCase):
         '''Test if the Http request returns 200'''
         response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'mes_aliments/index.html')
 
 
 class LegalMentionPageTestCase(TestCase):
@@ -128,3 +129,9 @@ class FavoritePageTestCase(TestCase):
         self.client.post('/login/', self.credentials, follow=True)
         response = self.client.get('/mes_favoris/')
         self.assertEqual(response.status_code, 200)
+
+class ErrorPageTestCase(TestCase):
+    ''' Error Page test casee '''
+    def test_404_page(self):
+        response = self.client.get('/ggggg/')
+        self.assertTemplateUsed(response, template_name='404.html')
