@@ -54,8 +54,8 @@ def detail_product(request, pk):
     '''get the pk of the product and return the detail of the product'''
     template = loader.get_template('mes_aliments/mon_produit.html')
     if request.method == 'GET':
-        product_search = Product.objects.filter(id=pk)
-    context = {'product': product_search[0]}
+        product_detail = Product.objects.filter(id=pk)
+    context = {'product': product_detail[0]}
     return HttpResponse(template.render(context, request=request))
 
 
@@ -74,8 +74,8 @@ def my_favorite(request):
     if request.method == 'GET':
         favorites = Favorite.objects.filter(username=request.user.username)
         for favorite in favorites:
-            product = Product.objects.filter(id=favorite.product_id)
-            favorite_product.append(product[0])
+            product_fav = Product.objects.filter(id=favorite.product_id)
+            favorite_product.append(product_fav[0])
             substitute = Product.objects.filter(id=favorite.substitute_id)
             favorite_substitute.append(substitute[0])
     context = {'favorite_product': favorite_product,

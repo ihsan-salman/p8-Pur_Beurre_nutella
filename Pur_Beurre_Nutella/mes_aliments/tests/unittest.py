@@ -20,7 +20,7 @@ class ModelsTestCase(TestCase):
         self.category_name = ['pizza', 'boisson']
         self.pizza_name = ['pizza1', 'pizza2', 'pizza3', 'pizza4', 'pizza5',
                            'pizza6']
-        self.pizza_nutriscore = ['a','c', 'b', 'd', 'e', 'a']
+        self.pizza_nutriscore = ['a', 'c', 'b', 'd', 'e', 'a']
         for name in self.category_name:
             self.category = Category.objects.create(name=name)
         for name, nutriscore in zip(self.pizza_name, self.pizza_nutriscore):
@@ -49,7 +49,7 @@ class ModelsTestCase(TestCase):
                           substitute_search('pizza5')[1].name,
                           substitute_search('pizza5')[2].name,
                           substitute_search('pizza5')[3].name,
-                          substitute_search('pizza5')[4].name], 
+                          substitute_search('pizza5')[4].name],
                          ['pizza1', 'pizza2', 'pizza3', 'pizza4', 'pizza6'])
         self.assertEqual([substitute_search('pizza4')[0].name,
                           substitute_search('pizza4')[1].name,
@@ -72,7 +72,7 @@ class IndexPageTestCase(TestCase):
         self.assertTemplateUsed(response, 'mes_aliments/index.html')
 
     def test_register_favorite_ok(self):
-        ''' Test if the products registration 
+        ''' Test if the products registration
             as favorite response returns 200 '''
         # Init one category and two products
         self.category = Category.objects.create(name='pizza')
@@ -82,7 +82,8 @@ class IndexPageTestCase(TestCase):
         self.product2 = Product.objects.create(
                 name='pizza2', brands='marque', nutriscore_grade='a',
                 url='url', image='image', stores='magasin')
-        response = self.client.post(reverse('home'), data={'pk_prod': '1', 'pk_subs': '2'})
+        response = self.client.post(reverse('home'), data={'pk_prod': '1',
+                                                           'pk_subs': '2'})
         self.assertEqual(response.status_code, 200)
 
 
@@ -106,7 +107,7 @@ class ProductPageTestCase(TestCase):
         self.product = Product.objects.create(
                 name='pizza1', brands='marque', nutriscore_grade='a',
                 url='url', image='image', stores='magasin')
-        response = self.client.post('/mes_substituts/', 
+        response = self.client.post('/mes_substituts/',
                                     data={'request_search': 'pizza'})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'mes_aliments/mes_produits.html')
@@ -120,7 +121,7 @@ class ProductPageTestCase(TestCase):
         self.product = Product.objects.create(
                 name='pizza1', brands='marque', nutriscore_grade='a',
                 url='url', image='image', stores='magasin')
-        response = self.client.post('/mes_substituts/', 
+        response = self.client.post('/mes_substituts/',
                                     data={'request_search': ''})
         self.assertEqual(response.status_code, 404)
 
@@ -211,12 +212,6 @@ class ProductDetailPageTestCase(TestCase):
         self.product = Product.objects.create(
                 name='pizza1', brands='marque', nutriscore_grade='a',
                 url='url', image='image', stores='magasin')
-        response = self.client.get(reverse('my_product', args=[self.product.id]))
+        response = self.client.get(reverse('my_product',
+                                           args=[self.product.id]))
         self.assertEqual(response.status_code, 200)
-
-
-class ErrorPageTestCase(TestCase):
-    ''' Error Page test class '''
-    def test_404_page(self):
-        '''  '''
-        pass

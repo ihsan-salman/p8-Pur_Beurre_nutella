@@ -3,7 +3,6 @@
 
 
 import time
-from django.urls import reverse
 from django.test import LiveServerTestCase
 from selenium import webdriver
 
@@ -70,7 +69,7 @@ class TestProject(LiveServerTestCase):
         self.browser.find_element_by_id("product_detail").click()
         self.assertEqual(self.browser.current_url, self.PRODUCT_DETAIL_URL)
 
-    def test_register_product(self):
+    """def test_register_product(self):
         ''' Register product functional test '''
         # Before registering favorite product and substitute we need to login
         self.browser.get(self.LOGIN_PAGE_URL)
@@ -82,5 +81,4 @@ class TestProject(LiveServerTestCase):
         self.browser.find_element_by_id("favorite_link").click()
         time.sleep(5)
         # After logged, we need to register one product
-        # as substitute and favorite
-        
+        # as substitute and favorite"""
