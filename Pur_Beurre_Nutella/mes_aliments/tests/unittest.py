@@ -18,8 +18,9 @@ class ModelsTestCase(TestCase):
     def setUp(self):
         '''Init the test with creation of one category and one product'''
         self.category_name = ['pizza', 'boisson']
-        self.pizza_name = ['pizza1', 'pizza2', 'pizza3']
-        self.pizza_nutriscore = ['c', 'b', 'd']
+        self.pizza_name = ['pizza1', 'pizza2', 'pizza3', 'pizza4', 'pizza5',
+                           'pizza6']
+        self.pizza_nutriscore = ['a','c', 'b', 'd', 'e', 'a']
         for name in self.category_name:
             self.category = Category.objects.create(name=name)
         for name, nutriscore in zip(self.pizza_name, self.pizza_nutriscore):
@@ -33,20 +34,33 @@ class ModelsTestCase(TestCase):
             url='url', image='image', stores='magasin')
         self.boisson1 = Category.objects.get(name='boisson')
         self.boisson1.save()
-        self.result = "pizza1"
 
     def test_product_search(self):
         '''Test the product_search method if returns the correct value'''
         self.my_product = product_search('pizza1')[0]
-        self.assertEqual(self.my_product.__str__(), self.result)
+        self.assertEqual(self.my_product.__str__(), 'pizza1')
         self.pizza_category = Category.objects.get(name='pizza')
         self.assertEqual(self.pizza_category.__str__(), 'pizza')
 
     def test_substitute_search(self):
         '''Test the substitute_search method if returns the correct values'''
-        self.substitutes = substitute_search('pizza3')
-        self.assertEqual([self.substitutes[0].name, self.substitutes[1].name],
-                         ['pizza1', 'pizza2'])
+        self.assertEqual(substitute_search('pizza3')[0].name, 'pizza1')
+        self.assertEqual([substitute_search('pizza5')[0].name,
+                          substitute_search('pizza5')[1].name,
+                          substitute_search('pizza5')[2].name,
+                          substitute_search('pizza5')[3].name,
+                          substitute_search('pizza5')[4].name], 
+                         ['pizza1', 'pizza2', 'pizza3', 'pizza4', 'pizza6'])
+        self.assertEqual([substitute_search('pizza4')[0].name,
+                          substitute_search('pizza4')[1].name,
+                          substitute_search('pizza4')[2].name,
+                          substitute_search('pizza4')[3].name],
+                         ['pizza1', 'pizza2', 'pizza3', 'pizza6'])
+        self.assertEqual([substitute_search('pizza2')[0].name,
+                          substitute_search('pizza2')[1].name,
+                          substitute_search('pizza2')[2].name],
+                         ['pizza1', 'pizza3', 'pizza6'])
+        self.assertEqual(substitute_search('pizza1')[0].name, 'pizza6')
 
 
 class IndexPageTestCase(TestCase):
@@ -57,6 +71,20 @@ class IndexPageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'mes_aliments/index.html')
 
+    def test_register_favorite_ok(self):
+        ''' Test if the products registration 
+            as favorite response returns 200 '''
+        # Init one category and two products
+        self.category = Category.objects.create(name='pizza')
+        self.product1 = Product.objects.create(
+                name='pizza1', brands='marque', nutriscore_grade='a',
+                url='url', image='image', stores='magasin')
+        self.product2 = Product.objects.create(
+                name='pizza2', brands='marque', nutriscore_grade='a',
+                url='url', image='image', stores='magasin')
+        response = self.client.post(reverse('home'), data={'pk_prod': '1', 'pk_subs': '2'})
+        self.assertEqual(response.status_code, 200)
+
 
 class LegalMentionPageTestCase(TestCase):
     '''Legal Mention page test class'''
@@ -64,16 +92,52 @@ class LegalMentionPageTestCase(TestCase):
         '''Test if the Http request returns 200'''
         response = self.client.get(reverse('mention_legal'))
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'mes_aliments/mention_legal.html')
 
 
 class ProductPageTestCase(TestCase):
     '''Product page test class'''
-    def test_product_page_returns_301(self):
-        '''Test if the Http request returns 301
+    def test_product_page_returns_200(self):
+        '''Test if the Http request returns 200
            and all substitute with a best nutriscore
            for the selected product '''
-        response = self.client.get('/mes_substituts')
-        self.assertEqual(response.status_code, 301)
+        # Init one category and one product
+        self.category = Category.objects.create(name='pizza')
+        self.product = Product.objects.create(
+                name='pizza1', brands='marque', nutriscore_grade='a',
+                url='url', image='image', stores='magasin')
+        response = self.client.post('/mes_substituts/', 
+                                    data={'request_search': 'pizza'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'mes_aliments/mes_produits.html')
+
+    def test_product_page_returns_404(self):
+        '''Test if the Http request returns 200
+           and all substitute with a best nutriscore
+           for the selected product '''
+        # Init one category and one product
+        self.category = Category.objects.create(name='pizza')
+        self.product = Product.objects.create(
+                name='pizza1', brands='marque', nutriscore_grade='a',
+                url='url', image='image', stores='magasin')
+        response = self.client.post('/mes_substituts/', 
+                                    data={'request_search': ''})
+        self.assertEqual(response.status_code, 404)
+
+
+class CreateAccountPageTestCase(TestCase):
+    ''' Create Account page test class '''
+    def test_create_page_returns_200(self):
+        ''' Test of the Http request returns 200 '''
+        response = self.client.get(reverse('create'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/create.html')
+
+    def test_create_account_ok(self):
+        ''' Test of acccount creation '''
+        response = self.client.post(reverse('create'), data={
+            'email': 'i@i.com', 'username': 'iiii', 'password1': 'azeqsd00'})
+        self.assertEqual(response.status_code, 200)
 
 
 class LoginPageTestCase(TestCase):
@@ -82,6 +146,7 @@ class LoginPageTestCase(TestCase):
         '''Test of the Http request returns 200'''
         response = self.client.get(reverse('login'))
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/login.html')
 
     def setUp(self):
         '''Init all needed data to test the user's login'''
@@ -113,6 +178,7 @@ class AccountPageTestCase(TestCase):
         self.client.post('/login/', self.credentials, follow=True)
         response = self.client.get('/mon_compte/')
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'mes_aliments/my_account.html')
 
 
 class FavoritePageTestCase(TestCase):
@@ -130,8 +196,27 @@ class FavoritePageTestCase(TestCase):
         response = self.client.get('/mes_favoris/')
         self.assertEqual(response.status_code, 200)
 
+    def test_template_favoris(self):
+        self.client.post('/login/', self.credentials, follow=True)
+        response = self.client.get('/mes_favoris/')
+        self.assertTemplateUsed(response, 'mes_aliments/mes_favoris.html')
+
+
+class ProductDetailPageTestCase(TestCase):
+    ''' Product Detail page test class '''
+    def test_detail_page_returns_200(self):
+        '''Test if the Http request 200 '''
+        # Init one category and one product
+        self.category = Category.objects.create(name='pizza')
+        self.product = Product.objects.create(
+                name='pizza1', brands='marque', nutriscore_grade='a',
+                url='url', image='image', stores='magasin')
+        response = self.client.get(reverse('my_product', args=[self.product.id]))
+        self.assertEqual(response.status_code, 200)
+
+
 class ErrorPageTestCase(TestCase):
-    ''' Error Page test casee '''
+    ''' Error Page test class '''
     def test_404_page(self):
-        response = self.client.get('/ggggg/')
-        self.assertTemplateUsed(response, template_name='404.html')
+        '''  '''
+        pass
