@@ -11012,172 +11012,405 @@ header.masthead h1, header.masthead .h1 {
 
 
 
-button{
-  height: 30px;
-  width: 40px;
-  margin-top: 5px;
-}
-#button{
-  background-color: white;
-}
-#contact{
-  background-color: #345a61;
-}
-#about{
-  background-color: #DE9440;
-}
-h1, h2, h3
+
+@media all 
 {
-  font-family: "Open Sans", sans-serif;
-}
-p{
-  font-family: "Scope One", sans-serif;
-}
-.float_left{
-  float: left;
-}
-#orange_top{
-  background-color: #DE9440;
-  margin-top: 100px;
-}
-#liste{
-  margin-top: 30px;
-}
-#submit_button {
-  font-size:0;
-  height: 0px;
-  width: 0px;
-  width: 20px;
-  background: none;
-  border: none;
-  cursor: pointer;
+
+    button{
+      height: 30px;
+      width: 40px;
+      margin-top: 5px;
+    }
+    #button{
+      background-color: white;
+    }
+    #contact{
+      background-color: #345a61;
+    }
+    #about{
+      background-color: #DE9440;
+    }
+    h1, h2, h3
+    {
+      font-family: "Open Sans", sans-serif;
+    }
+    p{
+      font-family: "Scope One", sans-serif;
+    }
+    .float_left{
+      float: left;
+    }
+    #orange_top{
+      background-color: #DE9440;
+      margin-top: 100px;
+    }
+    #liste{
+      margin-top: 30px;
+    }
+    #submit_button {
+      font-size:0;
+      height: 0px;
+      width: 0px;
+      width: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    #top_product{
+      background-color: #DE9440;
+      margin-top: 100px;
+    }
+    #save{
+      height: 15px;
+      width: 15px;
+    }
+     #product_detail
+    {
+        height: 400px;
+        width: 32%;
+        color: black;
+        margin-left: 30%;
+    }
+    #product_name
+    {   
+        border: solid;
+        border-color: black;
+        border-radius: 20px;
+        color: white;
+        background-color: black;
+        margin-top: 30px;
+    }
+    #orange_top_product{
+      background-color: #DE9440;
+      margin-top: 100px;
+      height: 600px;
+    }
+    #nutriscore{
+      font-size: 50px;
+      color: black;
+      display: inline;
+      font-family: Times, serif;
+    }
+    .inline{
+      display: inline;
+    }
+    #product_url{
+      border: 3px solid;
+      padding-top: 4px;
+      padding-right: 7px;
+      padding-left: 7px;
+      float: left;
+      margin-left: 10%;
+      margin-top: 70px;
+    }
+    #nutri_info{
+      margin-left: 60%;
+      font-size: 25px;
+    }
+    #product_info{
+      float: left;
+      margin-left: 20%;
+    }
+    #nutri_title{
+      font-size: 25px;
+    }
+    .margtop_20px{
+      margin-top: 20px;
+    }
+    #account_font{
+        width: 720px;
+        height: 405px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #h2{
+        background-color: gray;
+        width: 20%;
+        border-radius: 20px ;
+        text-align: center;
+        margin-left: 40%;
+    }
+    #user_mail{
+      text-align: center;
+      margin-top: 20px;
+      border: 3px solid;
+      border-radius: 20px;
+      padding-top: 4px;
+      padding-right: 7px;
+      padding-left: 7px;
+      width: 20%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #prod_fav{
+      float: left;
+      margin-left: 25%;
+    }
+    #subs_fav{
+      margin-left: 50%;
+    }
+    #nutri_vs{
+      margin-left:  45%;
+      margin-top: 10px;
+      border: 3px solid;
+      border-radius: 20px;
+      padding-top: 4px;
+      padding-right: 5px;
+      padding-left: 10px;
+      width: 5%;
+    }
+    #substitute{
+      display: inline-flex;
+      width: 400px;
+      margin-left: 50px;
+    }
+    #orange_top_registration{
+      background-color: #DE9440;
+      margin-top: 100px;
+      height: 500px;
+    }
+    #registration_form{
+      margin-left: 50px;
+      padding-top: 50px;
+    }
+    #substitute_img{
+      z-index: 1;
+    }
+    #substitute_nutri{
+      float: right;
+      margin-right: 74%;
+      font-size: 30px;
+    }
+    h4{
+      color: blue;
+    }
+    #contact_info{
+        margin-left: 20%
+    }
+    #phone_logo{
+        margin-left: 40px
+    }
+    #mail_zone{
+        margin-left: 70%
+    }
+    #mail_logo{
+        margin-left: 40px
+    }
+    #mention_legal{
+        margin-left: 50px;
+    }
+    #fav_img{
+        height: 300px;
+        width: 300px;
+    }
 }
 
-#top_product{
-  background-color: #DE9440;
-  margin-top: 100px;
-}
-#save{
-  height: 15px;
-  width: 15px;
-}
- #product_detail
+@media screen and (device-aspect-ratio: 375/812), 
+(device-aspect-ratio: 414/896), 
+(device-aspect-ratio: 414/736),
+(device-aspect-ratio: 375/667),
+(device-aspect-ratio: 360/740),
 {
-    height: 400px;
-    width: 32%;
-    color: black;
-    margin-left: 30%;
-}
-#product_name
-{   
-    border: solid;
-    border-color: black;
-    border-radius: 20px;
-    color: white;
-    background-color: black;
-    margin-top: 30px;
-}
-#orange_top_product{
-  background-color: #DE9440;
-  margin-top: 100px;
-  height: 600px;
-}
-#nutriscore{
-  font-size: 50px;
-  color: black;
-  display: inline;
-  font-family: Times, serif;
-}
-.inline{
-  display: inline;
-}
-#product_url{
-  border: 3px solid;
-  padding-top: 4px;
-  padding-right: 7px;
-  padding-left: 7px;
-  float: left;
-  margin-left: 10%;
-  margin-top: 70px;
-}
-#nutri_info{
-  margin-left: 60%;
-  font-size: 25px;
-}
-#product_info{
-  float: left;
-  margin-left: 20%;
-}
-#nutri_title{
-  font-size: 25px;
-}
-.margtop_20px{
-  margin-top: 20px;
-}
-#account_font{
-    width: 720px;
-    height: 405px;
-    margin-left: auto;
-    margin-right: auto;
-}
-#h2{
-    background-color: gray;
-    width: 20%;
-    border-radius: 20px ;
-    text-align: center;
-    margin-left: 40%;
-}
-#user_mail{
-  text-align: center;
-  margin-top: 20px;
-  border: 3px solid;
-  border-radius: 20px;
-  padding-top: 4px;
-  padding-right: 7px;
-  padding-left: 7px;
-  width: 20%;
-  margin-left: auto;
-  margin-right: auto;
-}
-#prod_fav{
-  float: left;
-  margin-left: 25%;
-}
-#subs_fav{
-  margin-left: 50%;
-}
-#nutri_vs{
-  margin-left:  45%;
-  margin-top: 10px;
-  border: 3px solid;
-  border-radius: 20px;
-  padding-top: 4px;
-  padding-right: 5px;
-  padding-left: 10px;
-  width: 5%;
-}
-#substitute{
-  display: inline-flex;
-  width: 400px;
-  margin-left: 50px;
-}
-#orange_top_registration{
-  background-color: #DE9440;
-  margin-top: 100px;
-  height: 500px;
-}
-#registration_form{
-  margin-left: 50px;
-  padding-top: 50px;
-}
-#substitute_img{
-  z-index: 1;
-}
-#substitute_nutri{
-  float: right;
-  margin-right: 74%;
-  font-size: 30px;
-}
-h4{
-  color: blue;
+    button{
+      height: 30px;
+      width: 40px;
+      margin-top: 5px;
+    }
+    #button{
+      background-color: white;
+    }
+    #contact{
+      background-color: #345a61;
+    }
+    #about{
+      background-color: #DE9440;
+    }
+    h1, h2, h3
+    {
+      font-family: "Open Sans", sans-serif;
+    }
+    p{
+      font-family: "Scope One", sans-serif;
+    }
+    .float_left{
+      float: left;
+    }
+    #orange_top{
+      background-color: #DE9440;
+      margin-top: 100px;
+    }
+    #liste{
+      margin-top: 30px;
+    }
+    #submit_button {
+      font-size:0;
+      height: 0px;
+      width: 0px;
+      width: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    #top_product{
+      background-color: #DE9440;
+      margin-top: 100px;
+    }
+    #save{
+      height: 15px;
+      width: 15px;
+    }
+     #product_detail
+    {
+        height: 320px;
+        width: 60%;
+        color: black;
+        margin-left: 30%;
+    }
+    #product_detail_search{
+        height: 200px;
+        width: 60%;
+        color: black;
+        margin-left: 30%;
+    }
+    #product_name
+    {   
+        border: solid;
+        border-color: black;
+        border-radius: 20px;
+        color: white;
+        background-color: black;
+        margin-top: 30px;
+    }
+    #orange_top_product{
+      background-color: #DE9440;
+      margin-top: 100px;
+      height: 600px;
+    }
+    #nutriscore{
+      font-size: 50px;
+      color: black;
+      display: inline;
+      font-family: Times, serif;
+    }
+    .inline{
+      display: inline;
+    }
+    #product_url{
+      border: 3px solid;
+      padding-top: 4px;
+      padding-right: 7px;
+      padding-left: 7px;
+      float: left;
+      margin-left: 10%;
+      margin-top: 10px;
+    }
+    #nutri_info{
+      margin-left: 60%;
+      font-size: 25px;
+    }
+    #product_info{
+      float: left;
+      margin-left: 20%;
+    }
+    #nutri_title{
+      font-size: 25px;
+    }
+    .margtop_20px{
+      margin-top: 20px;
+    }
+    #account_font{
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #h2{
+        background-color: gray;
+        width: 20%;
+        border-radius: 20px ;
+        text-align: center;
+        margin-left: 40%;
+    }
+    #user_mail{
+      text-align: center;
+      margin-top: 20px;
+      border: 3px solid;
+      border-radius: 20px;
+      padding-top: 4px;
+      padding-right: 7px;
+      padding-left: 7px;
+      width: 20%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #prod_fav{
+      float: left;
+      margin-left: 25%;
+    }
+    #subs_fav{
+      margin-left: 50%;
+    }
+    #nutri_vs{
+      margin-left:  45%;
+      margin-top: 10px;
+      border: 3px solid;
+      border-radius: 20px;
+      padding-top: 4px;
+      padding-right: 5px;
+      padding-left: 10px;
+      width: 20%;
+    }
+    #substitute{
+      display: inline-flex;
+      width: 200px;
+      height: 200;
+    }
+    #orange_top_registration{
+      background-color: #DE9440;
+      margin-top: 100px;
+      height: 800px;
+    }
+    #registration_form{
+      margin-left: 50px;
+      padding-top: 50px;
+    }
+    #substitute_img{
+      height: 150px;
+      width: 150px;
+    }
+    #substitute_nutri{
+      float: right;
+      margin-right: 74%;
+      font-size: 30px;
+    }
+    h4{
+      color: blue;
+    }
+    #contact_info{
+        margin-left: 5%
+    }
+    #phone_logo{
+        margin-left: 40px
+    }
+    #mail_zone{
+        margin-left: 50%
+    }
+    #mail_logo{
+        margin-left: 40px
+    }
+    #mention_legal{
+        margin-left: 10px;
+    }
+    #prod_img{
+        height: 300px;
+        width: 300px;
+    }
+    #subs_img{
+        height: 300px;
+        width: 300px;
+    }
+    #fav_img{
+        height: 120px;
+        width: 120px;
+    }
 }

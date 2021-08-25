@@ -13,12 +13,12 @@
                     <div id="liste">
                         <div id="prod_fav">
                             <a href="{% url 'my_product' product.id %}">
-                                <img src="{{ product.image }}"height="300" width="300">
+                                <img src="{{ product.image }}" id="fav_img">
                             </a>
                         </div>
                         <div id="subs_fav">
                             <a href="{% url 'my_product' substitute.id %}">
-                                <img src="{{ substitute.image }}"height="300" width="300">
+                                <img src="{{ substitute.image }}" id="fav_img">
                             </a>
                         </div>
                         <div id="nutri_vs">
