@@ -66,19 +66,5 @@ class TestProject(LiveServerTestCase):
         self.browser.get(self.INDEX_PAGE_URL)
         self.browser.find_element_by_id("text_input").send_keys('pizza')
         self.browser.find_element_by_id("button").click()
-        self.browser.find_element_by_id("product_detail").click()
+        self.browser.find_element_by_id("fav_img").click()
         self.assertEqual(self.browser.current_url, self.PRODUCT_DETAIL_URL)
-
-    """def test_register_product(self):
-        ''' Register product functional test '''
-        # Before registering favorite product and substitute we need to login
-        self.browser.get(self.LOGIN_PAGE_URL)
-        self.browser.find_element_by_id(
-            "id_username").send_keys('i')
-        self.browser.find_element_by_id(
-            "id_password").send_keys('salman57')
-        self.browser.find_element_by_id("submit_button").click()
-        self.browser.find_element_by_id("favorite_link").click()
-        time.sleep(5)
-        # After logged, we need to register one product
-        # as substitute and favorite"""
