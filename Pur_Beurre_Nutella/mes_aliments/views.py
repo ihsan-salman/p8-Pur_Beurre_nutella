@@ -39,14 +39,17 @@ def index(request):
 def product(request):
     '''get the user's query and return the related product'''
     template = loader.get_template('mes_aliments/mes_produits.html')
-    if request.method == 'POST':
-        search_request = request.POST.get('request_search')
-        my_product = product_search(search_request)[0]
-        substitutes = substitute_search(search_request)
-        if search_request == '':
-            return render(request, 'error_page/404.html', status=404)
-    context = {'product': my_product,
-               'substitutes': substitutes}
+    try:
+        if request.method == 'POST':
+            search_request = request.POST.get('request_search')
+            if search_request == '':
+                return render(request, 'error_page/404.html', status=404)
+            my_product = product_search(search_request)[0]
+            substitutes = substitute_search(search_request)
+        context = {'product': my_product,
+                   'substitutes': substitutes}
+    except IndexError:
+        return render(request, 'error_page/404.html', status=404)
     return HttpResponse(template.render(context, request=request))
 
 

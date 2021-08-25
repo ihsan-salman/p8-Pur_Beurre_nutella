@@ -125,6 +125,21 @@ class ProductPageTestCase(TestCase):
                                     data={'request_search': ''})
         self.assertEqual(response.status_code, 404)
 
+    def test_exception_returns_404(self):
+        ''' Test if the exception returns 404 '''
+        # Init one category and two products
+        self.category = Category.objects.create(name='pizza')
+        self.product1 = Product.objects.create(
+                name='pizza1', brands='marque', nutriscore_grade='a',
+                url='url', image='image', stores='magasin')
+        self.product2 = Product.objects.create(
+                name='pizza2', brands='marque', nutriscore_grade='a',
+                url='url', image='image', stores='magasin')
+        response = self.client.post('/mes_substituts/',
+                                    data={'request_search': 'dbbdé"bd'})
+        self.assertEqual(response.status_code, 404)
+
+
 
 class CreateAccountPageTestCase(TestCase):
     ''' Create Account page test class '''
