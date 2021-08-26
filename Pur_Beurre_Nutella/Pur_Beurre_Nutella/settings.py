@@ -147,7 +147,7 @@ INTERNAL_IPS = ['127.0.0.1']
 
 AUTHENTICATION_BACKENDS = ('mes_aliments.forms.EmailBackend',)
 
-if os.environ.get('ENV') == 'PRODUCTION':
+if os.environ.get('ENV') == 'PROD':
 
     # Static files settings
     PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
