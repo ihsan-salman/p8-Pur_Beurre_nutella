@@ -1,1 +1,1 @@
-web: gunicorn bootcamp.wsgi --log-file -
+web: gunicorn Pur_Beurre_Nutella.wsgi --log-file -
