@@ -30,7 +30,7 @@ if os.environ.get('ENV') == 'PROD':
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ["purbonheurre.herokuapp.com"]
+ALLOWED_HOSTS = ["purbonheurre.herokuapp.com", "127.0.0.1"]
 
 
 # Application definition
@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Pur_Beurre_Nutella.urls'
@@ -71,7 +72,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'whitenoise.middleware.WhiteNoiseMiddleware',
             ],
         },
     },
