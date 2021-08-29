@@ -1,1 +1,1 @@
-web: gunicorn Pur_Beurre_Nutella.wsgi
+web: gunicorn Pur_Beurre_Nutella.Pur_Beurre_Nutella.wsgi
