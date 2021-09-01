@@ -38,3 +38,12 @@ To start the program, go to this website:
 ```bash
 https://purbonheurre.herokuapp.com/
 ```
+
+Or you can launch the website with Django command:
+```bash
+cd Pur_Beurre_Nutella        # place in the good file
+
+manage.py runserver          # launch the local server
+
+http://127.0.0.1:8000/       # local url
+```
