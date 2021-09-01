@@ -14,7 +14,7 @@ python get-pip.py         #for windows
 ```
 after that, you have the choice to download the zip of the code or clone with the following command Line:
 ```bash
-git clone https://github.com/ihsan-salman/P7-GrandPy-Bot.git
+git clone https://github.com/ihsan-salman/p8-Pur_Beurre_nutella.git
 ```
 Create an virtual environment with the following command line:
 ```bash
