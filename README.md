@@ -46,4 +46,4 @@ cd Pur_Beurre_Nutella        # place in the good file
 manage.py runserver          # launch the local server
 
 http://127.0.0.1:8000/       # local url
-```  
+```
