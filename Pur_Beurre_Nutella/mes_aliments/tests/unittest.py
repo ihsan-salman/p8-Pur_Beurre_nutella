@@ -2,14 +2,12 @@
    -*- coding: Utf-8 -'''
 
 
-import requests
 from django.urls import reverse
 from django.test import TestCase
 from django.contrib.auth.models import User
 
 from ..models import Category, Product
 from ..helper.function import substitute_search, product_search
-
 """ Django Unittest including medthods, views and database """
 """ Using Testcase library from Django Test """
 
@@ -139,7 +137,6 @@ class ProductPageTestCase(TestCase):
         response = self.client.post('/mes_substituts/',
                                     data={'request_search': 'dbbdé"bd'})
         self.assertEqual(response.status_code, 404)
-
 
 
 class CreateAccountPageTestCase(TestCase):

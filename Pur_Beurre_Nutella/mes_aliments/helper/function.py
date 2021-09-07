@@ -1,6 +1,7 @@
 '''!/usr/bin/python3
    -*- coding: Utf-8 -'''
 
+
 from ..models import Product
 
 
