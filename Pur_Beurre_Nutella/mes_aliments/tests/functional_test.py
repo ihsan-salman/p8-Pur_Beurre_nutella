@@ -6,8 +6,6 @@ import time
 from django.test import LiveServerTestCase
 from selenium import webdriver
 
-# from ..models import Category, Contact, Product, Favorite
-
 """ Django Functional Test with Selenium library """
 """" automatising user's interaction with the website """
 
