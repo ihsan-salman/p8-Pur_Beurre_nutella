@@ -68,6 +68,7 @@ def legal_mention(request):
     return HttpResponse(template.render(request=request))
 
 
+@csrf_exempt
 @login_required(login_url='/login/')
 def my_favorite(request):
     '''return the template of the favorites'''
@@ -83,6 +84,18 @@ def my_favorite(request):
             favorite_substitute.append(substitute[0])
     context = {'favorite_product': favorite_product,
                'favorite_substitute': favorite_substitute}
+    try:
+        if request.method == 'POST':
+            username = request.user.username
+            product_id = request.POST.get("pk_prod")
+            substitute_id = request.POST.get('pk_subs')
+            favorite_registered = Favorite.objects.get(
+                product_id=product_id, substitute_id=substitute_id,
+                username=username)
+            favorite_registered.delete()
+            return HttpResponse(template.render(context, request=request))
+    except Favorite.DoesNotExist:
+        return HttpResponse(template.render(context, request=request))
     return HttpResponse(template.render(context, request=request))
 
 

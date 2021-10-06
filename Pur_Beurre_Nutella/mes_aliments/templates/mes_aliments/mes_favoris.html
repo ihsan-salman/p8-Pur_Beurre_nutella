@@ -10,7 +10,7 @@
       {% else %}
             {% load multifor %}
                 {% for product in favorite_product; substitute in favorite_substitute %}
-                    <div id="liste">
+                    <div class="liste" id="fav_div{{product.id}}{{substitute.id}}">
                         <div id="prod_fav">
                             <a href="{% url 'my_product' product.id %}">
                                 <img src="{{ product.image }}" id="fav_img">
@@ -24,8 +24,33 @@
                         <div id="nutri_vs">
                             {{product.nutriscore_grade}} vs {{substitute.nutriscore_grade}}
                         </div>
+                        <button id="dlt_fav_btn" type="button" onclick="delete_fav({{ product.id }}, {{substitute.id}})">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
                         <hr>
                     </div>
+                    <script type="text/javascript">
+                        function delete_fav(id_product, id_substitute){
+                            var ihsan = {
+                                "pk_prod": id_product,
+                                "pk_subs": id_substitute
+                            };
+
+                             $.ajax({
+                                url: "{% url 'my_favorite' %}",
+                                type: "POST",
+                                data: ihsan
+                            });
+
+                            var fav_div = document.getElementById("fav_div{{product.id}}{{substitute.id}}")
+                            if (fav_div) {
+                                fav_div.remove();
+                            };
+
+                            location.reload();
+
+                        }
+                    </script>
                 {% endfor %}
       {% endif %}
     </div>

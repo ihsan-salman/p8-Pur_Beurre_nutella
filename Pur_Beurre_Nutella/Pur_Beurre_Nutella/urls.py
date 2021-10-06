@@ -39,9 +39,3 @@ urlpatterns = [
         settings.LOGOUT_REDIRECT_URL}, name='logout'),
     path('admin/', admin.site.urls),
 ]
-
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns

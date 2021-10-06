@@ -11043,8 +11043,9 @@ header.masthead h1, header.masthead .h1 {
     #orange_top{
       background-color: #DE9440;
       margin-top: 100px;
+      min-height: 200px;
     }
-    #liste{
+    .liste{
       margin-top: 30px;
     }
     #submit_button {
@@ -11207,6 +11208,9 @@ header.masthead h1, header.masthead .h1 {
     #registration_button{
       width: 70px;
     }
+    #dlt_fav_btn{
+      margin-left: 46%;
+    }
 }
 
 @media screen and (device-aspect-ratio: 375/812), 
@@ -11243,7 +11247,7 @@ header.masthead h1, header.masthead .h1 {
       background-color: #DE9440;
       margin-top: 100px;
     }
-    #liste{
+    .liste{
       margin-top: 30px;
     }
     #submit_button {
