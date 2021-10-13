@@ -93,7 +93,6 @@ def my_favorite(request):
                 product_id=product_id, substitute_id=substitute_id,
                 username=username)
             favorite_registered.delete()
-            return HttpResponse(template.render(context, request=request))
     except Favorite.DoesNotExist:
         return HttpResponse(template.render(context, request=request))
     return HttpResponse(template.render(context, request=request))

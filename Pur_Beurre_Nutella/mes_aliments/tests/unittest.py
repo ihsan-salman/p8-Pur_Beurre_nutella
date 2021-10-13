@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from ..models import Category, Product
+from ..models import Category, Product, Favorite
 from ..helper.function import substitute_search, product_search
 """ Django Unittest including medthods, views and database """
 """ Using Testcase library from Django Test """
@@ -69,21 +69,6 @@ class IndexPageTestCase(TestCase):
         response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'mes_aliments/index.html')
-
-    def test_register_favorite_ok(self):
-        ''' Test if the products registration
-            as favorite response returns 200 '''
-        # Init one category and two products
-        self.category = Category.objects.create(name='pizza')
-        self.product1 = Product.objects.create(
-                name='pizza1', brands='marque', nutriscore_grade='a',
-                url='url', image='image', stores='magasin')
-        self.product2 = Product.objects.create(
-                name='pizza2', brands='marque', nutriscore_grade='a',
-                url='url', image='image', stores='magasin')
-        response = self.client.post(reverse('home'), data={'pk_prod': '1',
-                                                           'pk_subs': '2'})
-        self.assertEqual(response.status_code, 200)
 
 
 class LegalMentionPageTestCase(TestCase):
@@ -211,9 +196,50 @@ class FavoritePageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_template_favoris(self):
+        '''  '''
         self.client.post('/login/', self.credentials, follow=True)
         response = self.client.get('/mes_favoris/')
         self.assertTemplateUsed(response, 'mes_aliments/mes_favoris.html')
+
+    def test_add_favorite(self):
+        ''' Test if the Favorite product name are 
+            corresponding to the product names '''
+        # Init one category and two products
+        self.category = Category.objects.create(name='pizza')
+        self.product1 = Product.objects.create(
+                name='pizza1', brands='marque', nutriscore_grade='a',
+                url='url', image='image', stores='magasin')
+        self.product2 = Product.objects.create(
+                name='pizza2', brands='marque', nutriscore_grade='a',
+                url='url', image='image', stores='magasin')
+        response = self.client.post('/mes_substituts/',
+                                    data={'request_search': 'pizza1'})
+        response_add_fav = self.client.post('/', data={'pk_prod': '1',
+                                                       'pk_subs': '2'})
+        self.assertEqual([Favorite.objects.get(id=1).product, 
+                          Favorite.objects.get(id=1).substitute], 
+                         [Product.objects.get(id=1), Product.objects.get(id=2)])
+
+    def test_delete_favorite(self):
+        ''' test if the post method returns 200 HTTP response '''
+        # User's authentification
+        self.client.post('/login/', self.credentials, follow=True)
+        # Init one category and two products
+        self.category = Category.objects.create(name='pizza')
+        self.product1 = Product.objects.create(
+                name='pizza1', brands='marque', nutriscore_grade='a',
+                url='url', image='image', stores='magasin')
+        self.product2 = Product.objects.create(
+                name='pizza2', brands='marque', nutriscore_grade='a',
+                url='url', image='image', stores='magasin')
+        response = self.client.post('/mes_substituts/',
+                                    data={'request_search': 'pizza1'})
+        response_add_fav = self.client.post('/', data={'pk_prod': '1',
+                                                       'pk_subs': '2'})
+        response_del_fav = self.client.post('/mes_favoris/',
+                                            data={'pk_prod': '1',
+                                                  'pk_subs': '2'})
+        self.assertEqual(response_del_fav.status_code, 200)
 
 
 class ProductDetailPageTestCase(TestCase):
