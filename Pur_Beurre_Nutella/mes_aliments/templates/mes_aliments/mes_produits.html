@@ -27,21 +27,21 @@
                         <button id="submt_button{{substitute.id}}" type="button" onclick="call({{ product.id }}, {{substitute.id}})"><img src="{% static 'img/save.jpg' %}" id="save" ></button>
                     </div>
                 {% endfor %}
-                <script type="text/javascript">
-                    function call(id_product, id_substitute){
-                        var ihsan = {
-                            "pk_prod": id_product,
-                            "pk_subs": id_substitute
-                        };
-
-                         $.ajax({
-                            url: "{% url 'home' %}",
-                            type: "POST",
-                            data: ihsan
-                        });
-                    }
-                </script>
             </div>
         {% endif %}
     </div>
+    <script type="text/javascript">
+        function call(id_product, id_substitute){
+            var ihsan = {
+                "pk_prod": id_product,
+                "pk_subs": id_substitute
+            };
+
+             $.ajax({
+                url: "{% url 'home' %}",
+                type: "POST",
+                data: ihsan
+            });
+        }
+    </script>
 {% endblock %}

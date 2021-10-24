@@ -180,6 +180,34 @@ class AccountPageTestCase(TestCase):
         self.assertTemplateUsed(response, 'mes_aliments/my_account.html')
 
 
+class EditProfilePageTestCase(TestCase):
+    ''' Edit profile page test class '''
+    def setUp(self):
+        '''Init all needed data for the test'''
+        self.credentials = {
+            'username': 'testuser',
+            'password': 'secret'}
+        User.objects.create_user(**self.credentials)
+
+    def test_page_returns_200(self):
+        ''' Test of the Http request returns 200 '''
+        self.client.post('/login/', self.credentials, follow=True)
+        response = self.client.get('/edit_profile/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/edit_profile.html')
+
+    def test_profile_changes(self):
+        ''' Test if the Http request returns 200 
+            when the user edit his profile '''
+        self.client.post('/login/', self.credentials, follow=True)
+        response = self.client.get('/edit_profile/',
+                                   data={'email': 'i@i.com',
+                                         'username': 'iiii',
+                                        'first_name': 'ihsan',
+                                        'last_name': 'salman'})
+        self.assertEqual(response.status_code, 200)
+
+
 class FavoritePageTestCase(TestCase):
     '''Favorite page test class'''
     def setUp(self):
@@ -196,7 +224,7 @@ class FavoritePageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_template_favoris(self):
-        '''  '''
+        ''' test if the view use the correct template '''
         self.client.post('/login/', self.credentials, follow=True)
         response = self.client.get('/mes_favoris/')
         self.assertTemplateUsed(response, 'mes_aliments/mes_favoris.html')

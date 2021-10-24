@@ -52,8 +52,10 @@ class TestProject(LiveServerTestCase):
     def test_account_create(self):
         ''' Account creation functional test '''
         self.browser.get(self.CREATE_PAGE_URL)
-        self.browser.find_element_by_id("id_username").send_keys('iii')
+        self.browser.find_element_by_id("id_username").send_keys('iiii')
         self.browser.find_element_by_id("id_email").send_keys('i@i.com')
+        self.browser.find_element_by_id("id_first_name").send_keys('azerty')
+        self.browser.find_element_by_id("id_last_name").send_keys('uiopqs')
         self.browser.find_element_by_id("id_password1").send_keys('azeqsd00')
         self.browser.find_element_by_id("id_password2").send_keys('azeqsd00')
         self.browser.find_element_by_id("registration_button").click()

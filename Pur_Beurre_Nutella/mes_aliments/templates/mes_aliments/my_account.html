@@ -9,6 +9,15 @@
                 <div id="user_mail">
                     {{user.email}}
                 </div>
+                <div id="user_mail">
+                    <p>Prénom: {{user.first_name}}</p>
+                </div>
+                <div id="user_mail">
+                    <p>Nom: {{user.last_name}}</p>
+                </div>
+                <div class="text-center">
+                    <a href="{% url 'edit_my_account' %}">Cliquez ici pour changer vos informations personnelles</a>
+                </div>
         </div>
         <style type="text/css">
             #account_font{

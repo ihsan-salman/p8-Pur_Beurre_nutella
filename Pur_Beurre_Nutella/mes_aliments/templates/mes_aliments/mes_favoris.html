@@ -29,30 +29,34 @@
                         </button>
                         <hr>
                     </div>
-                    <script type="text/javascript">
-                        function delete_fav(id_product, id_substitute){
-
-                            var ihsan = {
-                                "pk_prod": id_product,
-                                "pk_subs": id_substitute
-                            };
-
-                             $.ajax({
-                                url: "{% url 'my_favorite' %}",
-                                type: "POST",
-                                data: ihsan
-                            });
-
-                            var fav_div = document.getElementById("fav_div{{product.id}}{{substitute.id}}")
-                            if (fav_div) {
-                                fav_div.remove();
-                            };
-
-                            location.reload();
-
-                        }
-                    </script>
                 {% endfor %}
       {% endif %}
     </div>
+     <script type="text/javascript">
+        function delete_fav(id_product, id_substitute){
+
+            var fav_div = document.getElementById("fav_div" + id_product + id_substitute);
+            var orange_top = document.getElementById("orange_top");
+
+            var fav_data = {
+                "pk_prod": id_product,
+                "pk_subs": id_substitute
+            };
+
+             $.ajax({
+                url: "{% url 'my_favorite' %}",
+                type: "POST",
+                data: fav_data,
+                success: function(data) {
+                    if (data == "OK"){
+                        fav_div.remove();
+                    } else if (data == "Favorite number is null"){
+                        fav_div.remove();
+                        orange_top.innerHTML += '<p>Votre liste de Favoris est nulle! Veuillez enregistrer des produits dans la base de données pour afficher cette liste.</p>';
+                    }}
+                
+            });
+
+        }
+    </script>
 {% endblock %}
