@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^mention_legal', views.legal_mention, name='mention_legal'),
     url(r'^mes_substituts/', views.product, name='find_substitute'),
     url(r'^mon_compte/', views.my_account, name='mon_compte'),
+    url(r'^edit_profile/', views.edit_account, name='edit_my_account'),
     url(r'^mes_favoris/', views.my_favorite, name='my_favorite'),
     url(r'^mon_produit/(?P<pk>\d+)/$', views.detail_product,
         name='my_product'),

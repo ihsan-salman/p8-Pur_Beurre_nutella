@@ -4,6 +4,7 @@
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth.backends import ModelBackend, UserModel
 from django.db.models import Q
@@ -17,7 +18,16 @@ class RegisterForm(UserCreationForm):
     class Meta:
         '''Making line between the form and User model'''
         model = User
-        fields = ["username", "email", "password1", "password2"]
+        fields = ["username", "email", "first_name", "last_name","password1", "password2"]
+
+class EditProfileForm(UserChangeForm):
+    ''' Edit Profile form class '''
+    password = None
+
+    class Meta:
+        model = User
+        fields = ['email', 'username', 'first_name', 'last_name']
+
 
 
 class EmailBackend(ModelBackend):

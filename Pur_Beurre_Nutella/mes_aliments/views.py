@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import Product, Favorite, Contact
 from .helper.function import substitute_search, product_search
-from .forms import RegisterForm, CustomAuthenticationForm
+from .forms import RegisterForm, CustomAuthenticationForm, EditProfileForm
 
 
 @csrf_exempt
@@ -95,6 +95,10 @@ def my_favorite(request):
             favorite_registered.delete()
     except Favorite.DoesNotExist:
         return HttpResponse(template.render(context, request=request))
+    if request.is_ajax():
+        if Favorite.objects.count() == 0:
+            return HttpResponse("Favorite number is null")
+        return HttpResponse("OK")
     return HttpResponse(template.render(context, request=request))
 
 
@@ -107,6 +111,9 @@ def create(request):
         if form.is_valid():
             email = request.POST.get('email')
             name = request.POST.get('username')
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            print(first_name, last_name)
             password = make_password(request.POST.get('password1'))
             contact = Contact.objects.filter(email=email)
             if not contact.exists():
@@ -114,6 +121,8 @@ def create(request):
                 user = User.objects.create(
                     username=name,
                     email=email,
+                    first_name=first_name,
+                    last_name=last_name,
                     password=password
                 )
                 contact = Contact.objects.create(email=email, name=name)
@@ -130,6 +139,20 @@ def create(request):
     else:
         form = RegisterForm()
     return render(request, 'registration/create.html', {'form': form})
+
+
+@login_required(login_url='/login/')
+def edit_account(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect('/mon_compte/')
+    else:   
+        form = EditProfileForm(instance=request.user)
+        args = {'form': form}
+        return render(request, 'registration/edit_profile.html', args) 
 
 
 @login_required(login_url='/login/')
