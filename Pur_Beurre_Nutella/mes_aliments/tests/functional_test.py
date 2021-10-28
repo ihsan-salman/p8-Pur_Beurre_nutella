@@ -16,7 +16,7 @@ class TestProject(LiveServerTestCase):
         ''' Init all Functional test '''
         # Path to edge webdriver
         self.browser = webdriver.Edge(
-            r"C:\Users\ihsan\Desktop\msedgedriver.exe")
+            r"D:\Python projects\Django\msedgedriver.exe")
         self.INDEX_PAGE_URL = 'http://127.0.0.1:8000/'
         self.LOGIN_PAGE_URL = 'http://127.0.0.1:8000/login/'
         self.CREATE_PAGE_URL = 'http://127.0.0.1:8000/create/'
@@ -89,9 +89,9 @@ class TestProject(LiveServerTestCase):
         self.browser.find_element_by_id("favorite_link").click()
         time.sleep(5)
         self.browser.find_element_by_id("dlt_fav_btn").click()
-        self.browser.refresh()
-
+        time.sleep(1)
         self.text = self.browser.find_element_by_tag_name("p")
+        print(self.text.get_attribute('innerHTML'))
         self.assertEqual(self.text.get_attribute('innerHTML'), 
             "Votre liste de Favoris est nulle! Veuillez enregistrer"
             " des produits dans la base de données pour afficher cette liste.")
